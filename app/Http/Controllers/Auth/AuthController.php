@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
@@ -53,11 +54,18 @@ class AuthController extends Controller {
         return json_encode(array("status" => "error", "info" => "Неверный логин или пароль"));
     }
 
-    /**
-     * Current User Logout
-     */
-    public function logout() {
-        dd("Test");
-        Auth::logout();
+
+    public function register(Request $request)
+    {
+        $data = $request->all();
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['login'];
+        $user->password = bcrypt($data['password']);
+        if ($user->save()) {
+            Auth::login($user);
+            return json_encode(array("status" => "success"));
+        }
+        return json_encode(array("status" => "error", "info" => 'Login exists'));
     }
 }
