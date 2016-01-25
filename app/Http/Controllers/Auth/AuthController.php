@@ -55,15 +55,19 @@ class AuthController extends Controller {
         return json_encode(array("status" => "error", "info" => "Неверный логин или пароль"));
     }
 
-
+    /**
+     * Register new user
+     *
+     * @param Request $request
+     * @return json
+     */
     public function register(Request $request)
     {
         $data = $request->all();
 
         $rules = ['email'=>'required|email|unique:users'];
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
-            // handler errors
             $erros = $validator->errors()->toArray();
             foreach($erros as $err) {
                 foreach($err as $er) {
@@ -71,10 +75,7 @@ class AuthController extends Controller {
                 }
             }
         }
-        $user = new User();
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->password = bcrypt($data['password']);
+        $user = new User($data);
         if ($user->save()) {
             Auth::login($user);
             return json_encode(array("status" => "success"));
