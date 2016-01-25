@@ -64,16 +64,10 @@ class AuthController extends Controller {
     public function register(Request $request)
     {
         $data = $request->all();
-
         $rules = ['email'=>'required|email|unique:users'];
         $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
-            $erros = $validator->errors()->toArray();
-            foreach($erros as $err) {
-                foreach($err as $er) {
-                    return json_encode(array("status" => "error", "info" => $er));
-                }
-            }
+            return json_encode(array("status" => "error", "info" => $validator->errors()->first()));
         }
         $user = new User($data);
         if ($user->save()) {
