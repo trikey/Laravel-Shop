@@ -12,7 +12,12 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		Model::unguard();
+        DB::table('users')->delete();
+        DB::table('users')->insert([
+            'name' => 'Ivan Belitskii',
+            'email' => 'belitskii@gmail.com',
+            'password' => bcrypt('swordfish1992'),
+        ]);
 
 		// $this->call('UserTableSeeder');
 	}

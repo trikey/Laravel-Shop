@@ -2,7 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Input;
+use Auth;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller {
@@ -14,6 +15,9 @@ class IndexController extends Controller {
 	 */
 	public function index()
 	{
+        if (Input::get('logout')) {
+            Auth::logout();
+        }
         return view('index');
 	}
 

@@ -6,7 +6,9 @@
 
 
     <link rel="shortcut icon" href="/ico.png">
-    <title>title</title>
+    <title>@yield('meta_title')</title>
+    <meta name="keywords" content="@yield('meta_keywords')" />
+    <meta name="description" content="@yield('meta_description')" />
 
     <!--[if lt IE 9]>
     <script src="{{ asset('/js/html5shiv.js') }}"></script>
@@ -31,7 +33,7 @@
 
 <body class="header-version-2">
 <div class="hidden-xs floating-social-menu">
-    <!--        <div class="nav navbar-nav navbar-right margin-top-10 hidden-xs">-->
+@include('socials/socnet_header')
 </div>
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5606a674f234f9d4" async="async"></script>
 <div class="bs-example top-132 hide" id="added-to-cart">
@@ -40,6 +42,12 @@
         Такого количества товара нет в наличии
     </div>
 </div>
+
+@if(Auth::guest())
+    @include('authorization/modal')
+    @include('authorization/register')
+@endif
+
 
 <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
 <div class="navbar-top">
@@ -52,17 +60,17 @@
                 <div class="pull-right">
                     <ul class="userMenu">
                         @if (!Auth::guest())
-{{--                        <li><a href="personal/"><span class="hidden-xs">Здравствуйте, {{ Auth::user()->name; }} !</span></a></li>--}}
-                        <li><a href="personal/"><span class="hidden-xs"> Мой кабинет</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
-                        <li><a href="?logout=yes"><span class="hidden-xs"> Выйти </span> <i class="hide visible-xs ">Выйти</i></a></li>
+                            <li><a href="personal/"><span class="hidden-xs">Здравствуйте, {{ Auth::user()->name }}!</span></a></li>
+                            <li><a href="personal/"><span class="hidden-xs"> Мой кабинет</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
+                            <li><a href="?logout=yes"><span class="hidden-xs"> Выйти </span> <i class="hide visible-xs ">Выйти</i></a></li>
                         @else
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#ModalLogin">
-                                <span class="hidden-xs">Войти</span>
-                                <i class="glyphicon glyphicon-log-in hide visible-xs "></i>
-                            </a>
-                        </li>
-                        <li class="hidden-xs"><a href="#" data-toggle="modal" data-target="#ModalSignup" id="register-popup"> Зарегистрироваться </a></li>
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#ModalLogin">
+                                    <span class="hidden-xs">Войти</span>
+                                    <i class="glyphicon glyphicon-log-in hide visible-xs "></i>
+                                </a>
+                            </li>
+                            <li class="hidden-xs"><a href="#" data-toggle="modal" data-target="#ModalSignup" id="register-popup"> Зарегистрироваться </a></li>
                         @endif
                     </ul>
                 </div>
@@ -158,7 +166,7 @@ cart
 <? endif ?>
 
 
-
+@yield('content')
 
 
 <? if (defined("SHOW_BREADCRUMBS")): ?>
@@ -167,7 +175,7 @@ cart
 
 <div class="gap"></div>
 
-
+@include('catalog/callback_form')
 
 <div class="modal fade" id="product-details-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -242,7 +250,7 @@ cart
                 <div style="clear:both" class="hide visible-xs"></div>
 
                 <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
-
+                    @include('subscribe/form_footer')
                     <ul class="social">
                         <li><a href="https://vk.com/thebaus" target="_blank"> <i class="fa fa-vk"> &nbsp; </i> </a></li>
                         <li><a href="https://www.facebook.com/The-BAUS-1669536626668913/" target="_blank"> <i class=" fa fa-facebook"> &nbsp; </i> </a></li>

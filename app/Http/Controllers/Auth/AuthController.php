@@ -1,9 +1,11 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
 
 class AuthController extends Controller {
 
@@ -35,4 +37,27 @@ class AuthController extends Controller {
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
 
+    /**
+     * Trying to authorize the user. Return json if success or not.
+     *
+     * @param Request $request
+     * @return json
+     */
+    public function authenticate(Request $request)
+    {
+        $data = $request->all();
+        if (Auth::attempt(['email' => $data['USER_LOGIN'], 'password' => $data['USER_PASSWORD']]))
+        {
+            return json_encode(array("status" => "success"));
+        }
+        return json_encode(array("status" => "error", "info" => "Неверный логин или пароль"));
+    }
+
+    /**
+     * Current User Logout
+     */
+    public function logout() {
+        dd("Test");
+        Auth::logout();
+    }
 }

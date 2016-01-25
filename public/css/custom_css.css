@@ -274,7 +274,7 @@
 }
 
 .parallax-image-1 {
-    background: url(/images/discount.jpg);
+    /*background: url(/images/discount.jpg);*/
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
