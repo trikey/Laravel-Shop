@@ -27,7 +27,7 @@
                 {{--</div>--}}
                 <div class="form-group reg-email">
                     <div>
-                        <input name="login" class="form-control input" size="20" placeholder="Email" type="text" data-rule-required="true" data-rule-email="true">
+                        <input name="email" class="form-control input" size="20" placeholder="Email" type="text" data-rule-required="true" data-rule-email="true">
                     </div>
                 </div>
                 <div class="form-group reg-password">

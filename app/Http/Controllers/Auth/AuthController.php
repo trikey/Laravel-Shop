@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Validator;
 use Auth;
 
 class AuthController extends Controller {
@@ -58,14 +59,25 @@ class AuthController extends Controller {
     public function register(Request $request)
     {
         $data = $request->all();
+
+        $rules = ['email'=>'required|email|unique:users'];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            // handler errors
+            $erros = $validator->errors()->toArray();
+            foreach($erros as $err) {
+                foreach($err as $er) {
+                    return json_encode(array("status" => "error", "info" => $er));
+                }
+            }
+        }
         $user = new User();
         $user->name = $data['name'];
-        $user->email = $data['login'];
+        $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
         if ($user->save()) {
             Auth::login($user);
             return json_encode(array("status" => "success"));
         }
-        return json_encode(array("status" => "error", "info" => 'Login exists'));
     }
 }
