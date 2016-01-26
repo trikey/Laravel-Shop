@@ -17,6 +17,7 @@ class MenuMiddleware {
         Menu::make('menu', function($menu) {
             $menu->add('Акции', 'aktsii');
             $menu->add('Блог', 'blog');
+            $menu->add('Бренды', 'brand');
         });
 		return $next($request);
 	}

@@ -2,13 +2,14 @@
 
 use \App\Blog;
 use \App\Offer;
+use \App\Brand;
 
 /**
  * Home
  */
 Breadcrumbs::register('home', function($breadcrumbs)
 {
-    $breadcrumbs->push('На главную', route('home'));
+    $breadcrumbs->push('Главная', route('home'));
 });
 
 /**
@@ -45,4 +46,21 @@ Breadcrumbs::register('offers.aktsii.show', function($breadcrumbs, $page)
     $breadcrumbs->parent('offers.aktsii.index');
     $offer = Offer::FindByCode($page)->first()->toArray();
     $breadcrumbs->push($offer['name'], route('offers.aktsii.show'));
+});
+/**
+ * Home > Brands
+ */
+Breadcrumbs::register('brand.brand.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Бренды', route('brand.brand.index'));
+});
+/**
+ * Home > Offers > Offers page
+ */
+Breadcrumbs::register('brand.brand.show', function($breadcrumbs, $page)
+{
+    $breadcrumbs->parent('brand.brand.index');
+    $brand = Brand::FindByCode($page)->first()->toArray();
+    $breadcrumbs->push($brand['name'], route('brand.brand.show'));
 });

@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use \App\User;
 use \App\Blog;
 use \App\Offer;
+use \App\Brand;
 
 class DatabaseSeeder extends Seeder {
 
@@ -47,6 +48,13 @@ class DatabaseSeeder extends Seeder {
         ]);
         $offer->user()->associate($user);
         $offer->save();
+
+        $brand = new Brand([
+            'name' => 'Тестовый Бренд',
+            'code' => 'test_brand'
+        ]);
+        $brand->user()->associate($user);
+        $brand->save();
 		// $this->call('UserTableSeeder');
 	}
 

@@ -18,12 +18,9 @@
 Route::post('ajax/login.php', '\App\Http\Controllers\Auth\AuthController@authenticate');
 Route::post('ajax/register.php', '\App\Http\Controllers\Auth\AuthController@register');
 
-Route::resource('blog', 'BlogController', [
-    'as' => 'blog'
-]);
-Route::resource('aktsii', 'OffersController', [
-    'as' => 'offers'
-]);
+Route::resource('blog', 'BlogController', ['as' => 'blog']);
+Route::resource('aktsii', 'OffersController', ['as' => 'offers']);
+Route::resource('brand', 'BrandsController', ['as' => 'brand']);
 //
 Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 
