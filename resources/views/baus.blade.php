@@ -160,18 +160,16 @@ cart
 
 </div>
 
-
-<? if (defined("SHOW_BREADCRUMBS")): ?>
-    <div class="container main-container headerOffset">
-<? endif ?>
-
+@if(Request::url() != 'http://baus.local')
+<div class="container main-container headerOffset">
+{!! Breadcrumbs::render() !!}
+@endif
 
 @yield('content')
 
-
-<? if (defined("SHOW_BREADCRUMBS")): ?>
-    </div>
-<? endif ?>
+@if(Request::url() != 'http://baus.local')
+</div>
+@endif
 
 <div class="gap"></div>
 

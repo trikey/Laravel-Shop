@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use \App\User;
 use \App\Blog;
+use \App\Offer;
 
 class DatabaseSeeder extends Seeder {
 
@@ -15,6 +16,7 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
         DB::table('blog')->delete();
+        DB::table('offers')->delete();
         DB::table('users')->delete();
 
         $user = new User([
@@ -38,6 +40,13 @@ class DatabaseSeeder extends Seeder {
         $article->user()->associate($user);
         $article->save();
 
+
+        $offer = new Offer([
+            'name' => 'Тестовая акция',
+            'code' => 'test_action'
+        ]);
+        $offer->user()->associate($user);
+        $offer->save();
 		// $this->call('UserTableSeeder');
 	}
 

@@ -14,13 +14,18 @@
 
 //Route::get('/', 'WelcomeController@index');
 //
-Route::get('home', 'HomeController@index');
+//Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
 Route::post('ajax/login.php', '\App\Http\Controllers\Auth\AuthController@authenticate');
 Route::post('ajax/register.php', '\App\Http\Controllers\Auth\AuthController@register');
 
-Route::resource('blog', 'BlogController');
+Route::resource('blog', 'BlogController', [
+    'as' => 'blog'
+]);
+Route::resource('aktsii', 'OffersController', [
+    'as' => 'offers'
+]);
 //
-Route::get('/', 'IndexController@index');
+Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
