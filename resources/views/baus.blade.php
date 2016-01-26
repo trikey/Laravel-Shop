@@ -86,7 +86,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span></button>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"><i class="fa fa-shopping-cart colorWhite"> </i> <span class="cartRespons colorWhite"> Корзина <span id="top_cart_total"></span> </span>
             </button>
-            <a class="navbar-brand " href=""> <img src="{{ asset('/img/thebaus.png') }}" alt="THE BAUS"> </a>
+            <a class="navbar-brand " href="{{ url('/') }}"> <img src="{{ asset('/img/thebaus.png') }}" alt="THE BAUS"> </a>
 
             <!-- this part for mobile -->
             <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
@@ -99,7 +99,7 @@
         </div>
         <div class="pull-right hidden-xs" itemscope itemtype="http://schema.org/WebSite">
             <meta itemprop="url" content="http://thebaus.ru/"/>
-            <form action="http://thebaus.ru/search/" method="get" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
+            <form action="{{url('/search')}}" method="get" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
                 <meta itemprop="target" content="http://thebaus.ru/search/?q={q}"/>
                 <input type="text" name="q"  itemprop="query-input" placeholder="Поиск" class="search-input-new" />
                 <div class="search-box2" onclick="$(this).parents('form').submit();">
@@ -127,7 +127,8 @@
 <!--/.navbar-cart-->
 
 <div class="navbar-collapse collapse">
-    menu
+    @include('_partials/menu', ['items'=> $menu_example->roots()])
+    {{--{!! $menu_example->asUl() !!}--}}
 
 <!--/.navbar-nav hidden-xs-->
 

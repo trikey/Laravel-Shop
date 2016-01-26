@@ -137,6 +137,8 @@ return [
 		'Illuminate\View\ViewServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+        'Collective\Html\HtmlServiceProvider',
+        'Caffeinated\Menus\MenusServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -196,7 +198,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
         'Form'=> 'Illuminate\Html\FormFacade',
         'HTML'=> 'Illuminate\Html\HtmlFacade',
-        'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade'
+        'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
+        'Menu' => 'Caffeinated\Menus\Facades\Menu'
 	],
 
 ];
