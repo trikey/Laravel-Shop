@@ -12,7 +12,7 @@ class CreateOffersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('blog', function(Blueprint $table) {
+		Schema::create('offers', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('active')->nullable();
 			$table->timestamp('active_from')->nullable();
@@ -42,7 +42,7 @@ class CreateOffersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('blog');
+		Schema::drop('offers');
 	}
 
 }
