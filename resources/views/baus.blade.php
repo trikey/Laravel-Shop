@@ -127,8 +127,7 @@
 <!--/.navbar-cart-->
 
 <div class="navbar-collapse collapse">
-    @include('_partials/menu', ['items'=> $menu_example->roots()])
-    {{--{!! $menu_example->asUl() !!}--}}
+    @include('_partials/menu', ['items'=> $menu_menu->roots()])
 
 <!--/.navbar-nav hidden-xs-->
 

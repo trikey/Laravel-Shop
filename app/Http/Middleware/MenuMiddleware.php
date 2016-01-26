@@ -14,7 +14,7 @@ class MenuMiddleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-        Menu::make('example', function($menu) {
+        Menu::make('menu', function($menu) {
             $menu->add('Акции', 'aktsii');
             $menu->add('Блог', 'blog');
         });
