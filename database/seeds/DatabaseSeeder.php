@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use \App\User;
+use \App\Blog;
 
 class DatabaseSeeder extends Seeder {
 
@@ -12,12 +14,31 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
+        DB::table('blog')->delete();
         DB::table('users')->delete();
-        DB::table('users')->insert([
+
+        $user = new User([
             'name' => 'Ivan Belitskii',
             'email' => 'belitskii@gmail.com',
-            'password' => bcrypt('swordfish1992'),
+            'password' => bcrypt('swordfish1992')
         ]);
+        $user->save();
+
+        $article = new Blog([
+            'name' => 'Тестовая статья',
+            'sort' => 1,
+            'code' => 'test_article'
+        ]);
+        $article->user()->associate($user);
+        $article->save();
+
+        $article = new Blog([
+            'name' => 'Тестовая статья 2',
+            'sort' => 2,
+            'code' => 'test_article2'
+        ]);
+        $article->user()->associate($user);
+        $article->save();
 
 		// $this->call('UserTableSeeder');
 	}

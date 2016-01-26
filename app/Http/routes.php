@@ -18,6 +18,7 @@ Route::get('home', 'HomeController@index');
 Route::post('ajax/login.php', '\App\Http\Controllers\Auth\AuthController@authenticate');
 Route::post('ajax/register.php', '\App\Http\Controllers\Auth\AuthController@register');
 
+Route::resource('blog', 'BlogController');
 //
 Route::get('/', 'IndexController@index');
 
