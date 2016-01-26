@@ -26,7 +26,6 @@ class DatabaseSeeder extends Seeder {
 
         $article = new Blog([
             'name' => 'Тестовая статья',
-            'sort' => 1,
             'code' => 'test_article'
         ]);
         $article->user()->associate($user);
@@ -34,7 +33,6 @@ class DatabaseSeeder extends Seeder {
 
         $article = new Blog([
             'name' => 'Тестовая статья 2',
-            'sort' => 2,
             'code' => 'test_article2'
         ]);
         $article->user()->associate($user);

@@ -17,7 +17,7 @@ class CreateBlogTable extends Migration {
 			$table->integer('active')->nullable();
 			$table->timestamp('active_from')->nullable();
 			$table->timestamp('active_till')->nullable();
-			$table->integer('sort')->unsigned();
+			$table->integer('sort')->unsigned()->nullable();
 			$table->string('name');
 			$table->string('preview_picture')->nullable();
 			$table->text('preview_text')->nullable();
