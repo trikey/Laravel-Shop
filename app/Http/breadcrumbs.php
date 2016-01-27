@@ -3,6 +3,8 @@
 use \App\Blog;
 use \App\Offer;
 use \App\Brand;
+use \App\Section;
+use \App\Product;
 
 /**
  * Home
@@ -63,4 +65,33 @@ Breadcrumbs::register('brand.brand.show', function($breadcrumbs, $page)
     $breadcrumbs->parent('brand.brand.index');
     $brand = Brand::FindByCode($page)->first()->toArray();
     $breadcrumbs->push($brand['name'], route('brand.brand.show'));
+});
+
+
+
+/**
+ * Home > Catalog
+ */
+Breadcrumbs::register('catalog', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Каталог', route('catalog'));
+});
+/**
+ * Home > Catalog > Section
+ */
+Breadcrumbs::register('catalog_section', function($breadcrumbs, $page)
+{
+    $breadcrumbs->parent('catalog');
+    $section = Section::FindByCode($page)->first();
+    $breadcrumbs->push($section['name'], $section->url);
+});
+/**
+ * Home > Catalog > Section > Product
+ */
+Breadcrumbs::register('catalog_product', function($breadcrumbs, $section, $product)
+{
+    $breadcrumbs->parent('catalog_section', $section);
+    $product = Product::FindByCode($product)->first()->toArray();
+    $breadcrumbs->push($product['name'], route('catalog_product'));
 });

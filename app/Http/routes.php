@@ -21,6 +21,11 @@ Route::post('ajax/register.php', '\App\Http\Controllers\Auth\AuthController@regi
 Route::resource('blog', 'BlogController', ['as' => 'blog']);
 Route::resource('aktsii', 'OffersController', ['as' => 'offers']);
 Route::resource('brand', 'BrandsController', ['as' => 'brand']);
+
+
+Route::get('catalog', ['as' => 'catalog', 'uses' => 'ProductsController@index']);
+Route::get('catalog/{section}', ['as' => 'catalog_section', 'uses' => 'ProductsController@section']);
+Route::get('catalog/{section}/{product}', ['as' => 'catalog_product', 'uses' => 'ProductsController@show']);
 //
 Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 

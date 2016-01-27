@@ -9,7 +9,7 @@ class Product extends Model {
 
     protected $fillable = ['active', 'active_from', 'active_till', 'sort', 'name', 'preview_picture', 'preview_text', 'detail_picture', 'detail_text', 'xml_id', 'code', 'meta_title', 'meta_keywords', 'meta_description', 'parent_id', 'brand_id', 'is_new_product', 'is_sale_leader'];
 
-    protected $appends = ['url'];
+    protected $appends = ['url', 'currency', 'price_print'];
 
     public function user()
     {
@@ -30,6 +30,16 @@ class Product extends Model {
     {
         $section = Section::find($this->attributes['parent_id']);
         return $this->attributes['url'] = url('catalog/'.$section->code.'/'.$this->attributes['code']);
+    }
+
+    public function getCurrencyAttribute()
+    {
+        return $this->attributes['currency'] = 'RUB';
+    }
+
+    public function getPricePrintAttribute()
+    {
+        return $this->attributes['price_print'] = $this->attributes['price'] . " р.";
     }
 
     public function scopeFindByCode($query, $code)

@@ -20,6 +20,13 @@ class ProductsController extends Controller {
         return view('catalog/index', compact('products'));
 	}
 
+	public function section($sectionCode)
+	{
+		$section = Section::findByCode($sectionCode)->first();
+		$products = $section->products()->paginate(1);
+		return view('catalog/index', compact('products'));
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -48,7 +55,8 @@ class ProductsController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$product = Product::findByCode($id)->first();
+		return view('catalog/detail', compact('product'));
 	}
 
 	/**
