@@ -29,9 +29,17 @@ class CreateSectionsTable extends Migration {
             $table->string('meta_keywords')->nullable();
             $table->string('meta_description')->nullable();
             $table->integer('modified_by')->unsigned();
+            $table->integer('parent_id')->unsigned()->default(0);
             $table->timestamps();
 
             $table->foreign('modified_by')->references('id')->on('users');
+        });
+
+        Schema::table('sections', function(Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('sections');
+        });
+        Schema::table('products', function(Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('sections');
         });
 	}
 
@@ -42,7 +50,7 @@ class CreateSectionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sections');
+//		Schema::drop('sections');
 	}
 
 }

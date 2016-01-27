@@ -6,6 +6,9 @@ use \App\User;
 use \App\Blog;
 use \App\Offer;
 use \App\Brand;
+use \App\Section;
+use \App\Product;
+use \App\Size;
 
 class DatabaseSeeder extends Seeder {
 
@@ -16,6 +19,10 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
+        DB::table('sizes')->delete();
+        DB::table('products')->delete();
+        DB::table('sections')->delete();
+        DB::table('brands')->delete();
         DB::table('blog')->delete();
         DB::table('offers')->delete();
         DB::table('users')->delete();
@@ -55,6 +62,37 @@ class DatabaseSeeder extends Seeder {
         ]);
         $brand->user()->associate($user);
         $brand->save();
+
+        $section = new Section([
+            'name' => 'Мужская одежда',
+            'code' => 'muzhskoe',
+        ]);
+        $section->user()->associate($user);
+        $section->save();
+
+        $product = new Product([
+            'name' => 'Джинсы',
+            'code' => 'jeans',
+        ]);
+        $product->user()->associate($user);
+        $product->section()->associate($section);
+        $product->brand()->associate($brand);
+        $product->save();
+
+        $size = new Size([
+            'name' => 'L'
+        ]);
+        $size->user()->associate($user);
+        $size->product()->associate($product);
+        $size->save();
+
+        $size = new Size([
+            'name' => 'XL'
+        ]);
+        $size->user()->associate($user);
+        $size->product()->associate($product);
+        $size->save();
+
 		// $this->call('UserTableSeeder');
 	}
 

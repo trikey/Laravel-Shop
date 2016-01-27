@@ -32,11 +32,13 @@ class CreateProductsTable extends Migration {
 			$table->integer('brand_id')->unsigned()->nullable();
 			$table->integer('is_new_product')->unsigned()->nullable();
 			$table->integer('is_sale_leader')->unsigned()->nullable();
+			$table->decimal('price')->unsigned()->nullable();
+            $table->integer('parent_id')->unsigned()->default(0);
 			$table->timestamps();
 
 			$table->foreign('modified_by')->references('id')->on('users');
 			$table->foreign('brand_id')->references('id')->on('brands');
-		});
+        });
 	}
 
 	/**
@@ -46,7 +48,7 @@ class CreateProductsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('products');
+//		Schema::drop('products');
 	}
 
 }

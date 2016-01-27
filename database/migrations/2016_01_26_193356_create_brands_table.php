@@ -42,7 +42,7 @@ class CreateBrandsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('brands');
+//		Schema::drop('brands');
 	}
 
 }

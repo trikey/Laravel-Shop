@@ -24,7 +24,7 @@ class CreateSizesTable extends Migration {
 			$table->string('detail_picture')->nullable();
 			$table->text('detail_text')->nullable();
 			$table->string('xml_id')->nullable();
-			$table->string('code')->unique();
+			$table->string('code')->unique()->nullable();
 			$table->string('meta_title')->nullable();
 			$table->string('meta_keywords')->nullable();
 			$table->string('meta_description')->nullable();
@@ -51,7 +51,7 @@ class CreateSizesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sizes');
+//		Schema::drop('sizes');
 	}
 
 }
