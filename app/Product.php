@@ -26,6 +26,11 @@ class Product extends Model {
         return $this->belongsTo('App\Brand', 'brand_id');
     }
 
+    public function sizes()
+    {
+        return $this->hasMany('App\Size');
+    }
+
     public function getUrlAttribute()
     {
         $section = Section::find($this->attributes['parent_id']);

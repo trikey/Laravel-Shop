@@ -53,9 +53,10 @@ class ProductsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($id, $productId)
 	{
-		$product = Product::findByCode($id)->first();
+		$product = Product::findByCode($productId)->first();
+//        dd($product->sizes);
 		return view('catalog/detail', compact('product'));
 	}
 

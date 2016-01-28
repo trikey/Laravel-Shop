@@ -18,6 +18,7 @@ class MenuMiddleware {
             $menu->add('Акции', 'aktsii');
             $menu->add('Блог', 'blog');
             $menu->add('Бренды', 'brand');
+            $menu->add('Каталог', 'catalog');
         });
 		return $next($request);
 	}
