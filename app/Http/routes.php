@@ -29,6 +29,13 @@ Route::get('catalog/{section}/{product}', ['as' => 'catalog_product', 'uses' => 
 //
 Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 
+
+Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
+Route::get('admin/news', ['as' => 'admin_news', 'uses' => 'AdminController@indexNews']);
+Route::delete('admin/news/{id}', 'AdminController@destroyNews');
+Route::get('admin/news/create', ['as' => 'admin_news_create', 'uses' => 'AdminController@createNews']);
+Route::post('admin/news/create', ['as' => 'admin_news_store', 'uses' => 'AdminController@storeNews']);
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
