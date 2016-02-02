@@ -1,7 +1,7 @@
 @extends('admin')
 
 @section('content')
-<h1>Добавить акцию</h1>
+<h1>Добавить Бренд</h1>
 @include('admin/_partials/menu')
 
 
@@ -11,7 +11,7 @@
         'novalidate' => 'novalidate',
         'files' => true)) !!}
 
-@include('admin/offers/_form')
+@include('admin/brands/_form')
 
 
 

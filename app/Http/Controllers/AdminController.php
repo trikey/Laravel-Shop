@@ -7,9 +7,11 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use App\Blog;
 use App\Offer;
+use App\Brand;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BlogRequest;
 use App\Http\Requests\OffersRequest;
+use App\Http\Requests\BrandsRequest;
 
 class AdminController extends Controller {
 
@@ -212,6 +214,100 @@ class AdminController extends Controller {
             $offer->update();
         }
         return redirect('admin/offers');
+    }
+
+
+
+
+
+    /**
+     * Бренды
+     */
+
+    public function indexBrands()
+    {
+        $brands = Brand::paginate(10);
+        return view('admin/brands/index', compact('brands'));
+    }
+
+    public function destroyBrands($id)
+    {
+        Brand::find($id)->delete();
+        return redirect('admin/brands');
+    }
+
+    public function createBrands()
+    {
+        return view('admin/brands/create');
+
+    }
+
+    public function storeBrands(BrandsRequest $request)
+    {
+        $brand = new Brand($request->all());
+        $user = Auth::user();
+
+        $brand->user()->associate($user);
+
+        $brand->save();
+
+        if ($request->file('preview_picture')) {
+            $imageName = $brand->id . '_prev_offer.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $brand->preview_picture = $imageName;
+            $brand->save();
+        }
+        if ($request->file('detail_picture')) {
+            $imageName = $brand->id . '_detail_offer.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $brand->detail_picture = $imageName;
+            $brand->save();
+        }
+
+        return redirect('admin/brands');
+    }
+
+    public function editBrands($id)
+    {
+        $brand = Brand::find($id);
+        return view('admin/brands/edit', compact('brand'));
+    }
+
+    public function updateBrands($id, BrandsRequest $request)
+    {
+        $brand = Brand::findOrFail($id);
+
+        $brand->update($request->all());
+        $user = Auth::user();
+        $brand->user()->associate($user);
+        $brand->update();
+
+        if ($request->get('delete_preview')) {
+            @unlink(base_path() . '/public/uploads/'.$brand->preview_picture);
+            $brand->preview_picture = NULL;
+            $brand->update();
+        }
+        if ($request->get('delete_detail')) {
+            @unlink(base_path() . '/public/uploads/'.$brand->detail_picture);
+            $brand->detail_picture = NULL;
+            $brand->update();
+        }
+
+        if ($request->file('preview_picture')) {
+            @unlink(base_path() . '/public/uploads/'.$brand->preview_picture);
+            $imageName = $brand->id . '_prev_offer.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $brand->preview_picture = $imageName;
+            $brand->update();
+        }
+        if ($request->file('detail_picture')) {
+            @unlink(base_path() . '/public/uploads/'.$brand->detail_picture);
+            $imageName = $brand->id . '_detail_offer.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $brand->detail_picture = $imageName;
+            $brand->update();
+        }
+        return redirect('admin/brands');
     }
 
 

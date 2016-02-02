@@ -8,4 +8,7 @@
     <li>
         <a href="{{ url('admin/offers') }}">Акции</a>
     </li>
+    <li>
+        <a href="{{ url('admin/brands') }}">Бренды</a>
+    </li>
 </ul>

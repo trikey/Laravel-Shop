@@ -1,18 +1,20 @@
 @extends('admin')
 
 @section('content')
-<h1>Добавить акцию</h1>
+<h1>Редактировать Бренд</h1>
 @include('admin/_partials/menu')
 
 
-{!! Form::open(
+{!! Form::model($brand,
     array(
         'class' => 'form',
         'novalidate' => 'novalidate',
-        'files' => true)) !!}
+        'files' => true,
+        'method' => 'put'
+        )) !!}
 
-@include('admin/offers/_form')
 
+@include('admin/brands/_form')
 
 
 
