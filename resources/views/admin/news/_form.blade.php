@@ -26,6 +26,14 @@
     {!! Form::text('sort', null, array('placeholder'=>'500', 'class' => 'form-control')) !!}
 </div>
 <div class="form-group">
+    @if(isset($article) && isset($article->preview_picture))
+        <img src="/uploads/{{ $article->preview_picture }}" width="200" alt="{{ $article->name }}"><br>
+        <div class="checkbox">
+            <label>
+                {!! Form::checkbox('delete_preview', 1, false) !!} <b>Удалить</b>
+            </label>
+        </div>
+    @endif
     {!! Form::label('Картинка для анонса') !!}
     {!! Form::file('preview_picture', null) !!}
 </div>
@@ -34,6 +42,14 @@
     {!! Form::textarea('preview_text', null, array('class' => 'form-control', 'rows' => 3)) !!}
 </div>
 <div class="form-group">
+    @if(isset($article) && isset($article->detail_picture))
+        <img src="/uploads/{{ $article->detail_picture }}" width="200" alt="{{ $article->name }}"><br>
+        <div class="checkbox">
+            <label>
+                {!! Form::checkbox('delete_detail', 1, false) !!} <b>Удалить</b>
+            </label>
+        </div>
+    @endif
     {!! Form::label('Детальная картинка') !!}
     {!! Form::file('detail_picture', null) !!}
 </div>
@@ -55,5 +71,5 @@
 </div>
 <div class="form-group">
     {!! Form::label('Meta Description') !!}
-    {!! Form::text('meta_description', null, array('placeholder'=>'description', 'class' => 'form-control')) !!}
+    {!! Form::textarea('meta_description', null, array('placeholder'=>'description', 'class' => 'form-control', 'rows' => 3)) !!}
 </div>

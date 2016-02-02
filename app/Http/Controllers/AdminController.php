@@ -47,13 +47,13 @@ class AdminController extends Controller {
 
         $article->save();
 
-        if ($article->preview_picture) {
+        if ($request->file('preview_picture')) {
             $imageName = $article->id . '_prev.' . $request->file('preview_picture')->getClientOriginalExtension();
             $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->preview_picture = $imageName;
             $article->save();
         }
-        if ($article->detail_picture) {
+        if ($request->file('detail_picture')) {
             $imageName = $article->id . '_detail.' . $request->file('detail_picture')->getClientOriginalExtension();
             $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->detail_picture = $imageName;
@@ -78,17 +78,29 @@ class AdminController extends Controller {
 
         $article->update($request->all());
         $user = Auth::user();
-
         $article->user()->associate($user);
-
         $article->update();
-        if ($request->get('preview_picture')) {
+
+        if ($request->get('delete_preview')) {
+            @unlink(base_path() . '/public/uploads/'.$article->preview_picture);
+            $article->preview_picture = NULL;
+            $article->update();
+        }
+        if ($request->get('delete_detail')) {
+            @unlink(base_path() . '/public/uploads/'.$article->detail_picture);
+            $article->detail_picture = NULL;
+            $article->update();
+        }
+
+        if ($request->file('preview_picture')) {
+            @unlink(base_path() . '/public/uploads/'.$article->preview_picture);
             $imageName = $article->id . '_prev.' . $request->file('preview_picture')->getClientOriginalExtension();
             $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->preview_picture = $imageName;
             $article->update();
         }
-        if ($request->get('detail_picture')) {
+        if ($request->file('detail_picture')) {
+            @unlink(base_path() . '/public/uploads/'.$article->detail_picture);
             $imageName = $article->id . '_detail.' . $request->file('detail_picture')->getClientOriginalExtension();
             $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->detail_picture = $imageName;
