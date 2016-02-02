@@ -3,13 +3,21 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use App\Blog;
+use App\Offer;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BlogRequest;
+use App\Http\Requests\OffersRequest;
 
 class AdminController extends Controller {
 
+
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -19,6 +27,12 @@ class AdminController extends Controller {
 	{
 		return view('admin/index');
 	}
+
+
+    /**
+     * Новости
+     */
+
 
     public function indexNews()
     {
@@ -48,13 +62,13 @@ class AdminController extends Controller {
         $article->save();
 
         if ($request->file('preview_picture')) {
-            $imageName = $article->id . '_prev.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $imageName = $article->id . '_prev_article.' . $request->file('preview_picture')->getClientOriginalExtension();
             $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->preview_picture = $imageName;
             $article->save();
         }
         if ($request->file('detail_picture')) {
-            $imageName = $article->id . '_detail.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $imageName = $article->id . '_detail_article.' . $request->file('detail_picture')->getClientOriginalExtension();
             $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->detail_picture = $imageName;
             $article->save();
@@ -64,7 +78,6 @@ class AdminController extends Controller {
 
 
     }
-
 
     public function editNews($id)
     {
@@ -94,20 +107,114 @@ class AdminController extends Controller {
 
         if ($request->file('preview_picture')) {
             @unlink(base_path() . '/public/uploads/'.$article->preview_picture);
-            $imageName = $article->id . '_prev.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $imageName = $article->id . '_prev_article.' . $request->file('preview_picture')->getClientOriginalExtension();
             $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->preview_picture = $imageName;
             $article->update();
         }
         if ($request->file('detail_picture')) {
             @unlink(base_path() . '/public/uploads/'.$article->detail_picture);
-            $imageName = $article->id . '_detail.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $imageName = $article->id . '_detail_article.' . $request->file('detail_picture')->getClientOriginalExtension();
             $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->detail_picture = $imageName;
             $article->update();
         }
         return redirect('admin/news');
     }
+
+
+
+    /**
+     * Акции
+     */
+
+    public function indexOffers()
+    {
+        $offers = Offer::paginate(10);
+        return view('admin/offers/index', compact('offers'));
+    }
+
+    public function destroyOffers($id)
+    {
+        Offer::find($id)->delete();
+        return redirect('admin/offers');
+    }
+
+    public function createOffers()
+    {
+        return view('admin/offers/create');
+
+    }
+
+    public function storeOffers(OffersRequest $request)
+    {
+        $offer = new Offer($request->all());
+        $user = Auth::user();
+
+        $offer->user()->associate($user);
+
+        $offer->save();
+
+        if ($request->file('preview_picture')) {
+            $imageName = $offer->id . '_prev_offer.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $offer->preview_picture = $imageName;
+            $offer->save();
+        }
+        if ($request->file('detail_picture')) {
+            $imageName = $offer->id . '_detail_offer.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $offer->detail_picture = $imageName;
+            $offer->save();
+        }
+
+        return redirect('admin/offers');
+    }
+
+    public function editOffers($id)
+    {
+        $offer = Offer::find($id);
+        return view('admin/offers/edit', compact('offer'));
+    }
+
+    public function updateOffers($id, OffersRequest $request)
+    {
+        $offer = Offer::findOrFail($id);
+
+        $offer->update($request->all());
+        $user = Auth::user();
+        $offer->user()->associate($user);
+        $offer->update();
+
+        if ($request->get('delete_preview')) {
+            @unlink(base_path() . '/public/uploads/'.$offer->preview_picture);
+            $offer->preview_picture = NULL;
+            $offer->update();
+        }
+        if ($request->get('delete_detail')) {
+            @unlink(base_path() . '/public/uploads/'.$offer->detail_picture);
+            $offer->detail_picture = NULL;
+            $offer->update();
+        }
+
+        if ($request->file('preview_picture')) {
+            @unlink(base_path() . '/public/uploads/'.$offer->preview_picture);
+            $imageName = $offer->id . '_prev_offer.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $offer->preview_picture = $imageName;
+            $offer->update();
+        }
+        if ($request->file('detail_picture')) {
+            @unlink(base_path() . '/public/uploads/'.$offer->detail_picture);
+            $imageName = $offer->id . '_detail_offer.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $offer->detail_picture = $imageName;
+            $offer->update();
+        }
+        return redirect('admin/offers');
+    }
+
+
 
 	/**
 	 * Show the form for creating a new resource.

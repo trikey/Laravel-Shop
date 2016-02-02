@@ -8,7 +8,9 @@ class Section extends Model {
 
     protected $fillable = ['active', 'active_from', 'active_till', 'sort', 'name', 'preview_picture', 'preview_text', 'detail_picture', 'detail_text', 'xml_id', 'code', 'meta_title', 'meta_keywords', 'meta_description', 'parent_id'];
 
-    protected $appends = ['url'];
+    protected $appends = ['url', 'delete_preview', 'delete_detail'];
+
+    protected $dates = ['active_from', 'active_till'];
 
     public function user()
     {

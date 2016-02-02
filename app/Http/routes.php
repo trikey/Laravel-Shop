@@ -38,6 +38,13 @@ Route::post('admin/news/create', ['as' => 'admin_news_store', 'uses' => 'AdminCo
 Route::get('admin/news/{id}/edit', ['as' => 'admin_news_edit', 'uses' => 'AdminController@editNews']);
 Route::put('admin/news/{id}/edit', ['as' => 'admin_news_update', 'uses' => 'AdminController@updateNews']);
 
+Route::get('admin/offers', ['as' => 'admin_offers', 'uses' => 'AdminController@indexOffers']);
+Route::delete('admin/offers/{id}', 'AdminController@destroyOffers');
+Route::get('admin/offers/create', ['as' => 'admin_offers_create', 'uses' => 'AdminController@createOffers']);
+Route::post('admin/offers/create', ['as' => 'admin_offers_store', 'uses' => 'AdminController@storeOffers']);
+Route::get('admin/offers/{id}/edit', ['as' => 'admin_offers_edit', 'uses' => 'AdminController@editOffers']);
+Route::put('admin/offers/{id}/edit', ['as' => 'admin_offers_update', 'uses' => 'AdminController@updateOffers']);
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
