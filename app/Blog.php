@@ -10,6 +10,8 @@ class Blog extends Model {
 
     protected $appends = ['url'];
 
+    protected $dates = ['active_from', 'active_till'];
+
     public function user()
     {
         return $this->belongsTo('App\User', 'modified_by');

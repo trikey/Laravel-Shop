@@ -48,13 +48,52 @@ class AdminController extends Controller {
         $article->save();
 
         if ($article->preview_picture) {
-            $imageName = $article->id . '.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $imageName = $article->id . '_prev.' . $request->file('preview_picture')->getClientOriginalExtension();
             $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
             $article->preview_picture = $imageName;
             $article->save();
         }
+        if ($article->detail_picture) {
+            $imageName = $article->id . '_detail.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $article->detail_picture = $imageName;
+            $article->save();
+        }
+
+        return redirect('admin/news');
 
 
+    }
+
+
+    public function editNews($id)
+    {
+        $article = Blog::find($id);
+        return view('admin/news/edit', compact('article'));
+    }
+
+    public function updateNews($id, BlogRequest $request)
+    {
+        $article = Blog::findOrFail($id);
+
+        $article->update($request->all());
+        $user = Auth::user();
+
+        $article->user()->associate($user);
+
+        $article->update();
+        if ($request->get('preview_picture')) {
+            $imageName = $article->id . '_prev.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $article->preview_picture = $imageName;
+            $article->update();
+        }
+        if ($request->get('detail_picture')) {
+            $imageName = $article->id . '_detail.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $article->detail_picture = $imageName;
+            $article->update();
+        }
         return redirect('admin/news');
     }
 

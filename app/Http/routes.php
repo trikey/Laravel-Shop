@@ -35,6 +35,8 @@ Route::get('admin/news', ['as' => 'admin_news', 'uses' => 'AdminController@index
 Route::delete('admin/news/{id}', 'AdminController@destroyNews');
 Route::get('admin/news/create', ['as' => 'admin_news_create', 'uses' => 'AdminController@createNews']);
 Route::post('admin/news/create', ['as' => 'admin_news_store', 'uses' => 'AdminController@storeNews']);
+Route::get('admin/news/{id}/edit', ['as' => 'admin_news_edit', 'uses' => 'AdminController@editNews']);
+Route::put('admin/news/{id}/edit', ['as' => 'admin_news_update', 'uses' => 'AdminController@updateNews']);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

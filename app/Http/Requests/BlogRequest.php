@@ -1,6 +1,7 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Blog;
 
 class BlogRequest extends Request {
 
@@ -22,10 +23,17 @@ class BlogRequest extends Request {
 
     public function rules()
     {
+        $id = '';
+        if ($this->get('code')) {
+            $article = Blog::findByCode($this->get('code'))->first();
+            if ($article) {
+                $id = ','.$article->id;
+            }
+        }
         return [
             'name' => 'required',
             'preview_picture' => 'mimes:jpeg,png,jpg',
-            'code' => 'required|unique:blog'
+            'code' => 'required|unique:blog,code'.$id
         ];
     }
 
