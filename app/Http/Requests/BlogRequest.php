@@ -24,7 +24,7 @@ class BlogRequest extends Request {
     {
         return [
             'name' => 'required',
-            'preview_picture' => 'required|mimes:jpeg,png,jpg',
+            'preview_picture' => 'mimes:jpeg,png,jpg',
             'code' => 'required|unique:blog'
         ];
     }

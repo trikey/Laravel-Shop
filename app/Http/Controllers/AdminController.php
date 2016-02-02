@@ -40,22 +40,20 @@ class AdminController extends Controller {
 
     public function storeNews(BlogRequest $request)
     {
-        $article = new Blog(array(
-            'name' => $request->get('name'),
-            'preview_picture'  => $request->get('preview_picture'),
-            'code' => $request->get('code')
-        ));
+        $article = new Blog($request->all());
         $user = Auth::user();
 
         $article->user()->associate($user);
 
         $article->save();
 
-        $imageName = $article->id . '.' . $request->file('preview_picture')->getClientOriginalExtension();
-        $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
-        $article->preview_picture = $imageName;
+        if ($article->preview_picture) {
+            $imageName = $article->id . '.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $article->preview_picture = $imageName;
+            $article->save();
+        }
 
-        $article->save();
 
         return redirect('admin/news');
     }
