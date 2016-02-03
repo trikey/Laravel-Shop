@@ -52,8 +52,8 @@
                                 </div>
                                 @if ($arItem->preview_picture)
                                     <a href="{{ $arItem->url }}">
-                                        <img itemprop="image" src="{{ $arItem->preview_picture }}" alt="{{ $arItem->name }}" class="img-responsive primaryImage">
-                                        <img itemprop="image" src="{{ $arItem->detail_picture }}" alt="{{ $arItem->name }}" class="img-responsive secondaryImage">
+                                        <img itemprop="image" src="/uploads/{{ $arItem->preview_picture }}" alt="{{ $arItem->name }}" class="img-responsive primaryImage">
+                                        <img itemprop="image" src="/uploads/{{ $arItem->detail_picture }}" alt="{{ $arItem->name }}" class="img-responsive secondaryImage">
                                     </a>
                                 @endif
                                 <div class="promotion">
@@ -66,9 +66,8 @@
                             <div class="description">
                                 <h4 itemprop="name"><a href="{{ $arItem->url }}">{{ $arItem->name }}</a></h4>
                                 <br/>
-                                {{--@if (!empty($arItem["PROPERTIES"]["SIZE"]["VALUE"]))--}}
-                                {{--<span class="size" itemprop="description">Размеры: {{ implode(' / ', $arItem["PROPERTIES"]["SIZE"]["VALUE"]); }}</span>--}}
-                                {{--@endif--}}
+
+                                <span class="size" itemprop="description">Размеры: {{ $arItem->available_sizes }}</span>
                             </div>
 
                             <div class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -95,17 +94,28 @@
                             <div class="col-lg-5 col-md-5 col-sm-5  col-xs-12 modal-card-img-container">
     
                                 <div class="main-image  col-lg-12 no-padding style3">
+                                    @if(strlen($arItem->preview_picture) > 0)
                                     <a class="product-largeimg-link" href="{{ $arItem->id }}">
-                                        {{--<img src="{{ $arItem["PHOTOS"][0]["BIG"]; }}" class="img-responsive product-largeimg" alt="{{ $arItem["NAME"]; }}" />--}}
+                                        <img src="/uploads/{{ $arItem->preview_picture }}" class="img-responsive product-largeimg" alt="{{ $arItem->name }}" />
                                     </a>
+                                    @elseif(strlen($arItem->detail_picture))
+                                        <a class="product-largeimg-link" href="{{ $arItem->id }}">
+                                            <img src="/uploads/{{ $arItem->detail_picture }}" class="img-responsive product-largeimg" alt="{{ $arItem->name }}" />
+                                        </a>
+                                    @endif
                                 </div>
     
                                 <div class="modal-product-thumb">
-{{--                                    @foreach($arItem["PHOTOS"] as $photo)--}}
-                                    {{--<a class="thumbLink selected">--}}
-                                        {{--<img data-large="{{$photo["BIG"]; }}" alt="{{ $arItem["NAME"]; }}" class="img-responsive" src="{{$photo["SMALL"];}}" />--}}
-                                    {{--</a>--}}
-                                    {{--@endforeach--}}
+                                    @if(strlen($arItem->preview_picture) > 0)
+                                    <a class="thumbLink selected">
+                                        <img data-large="/uploads/{{ $arItem->preview_picture }}" alt="{{ $arItem->name }}" class="img-responsive" src="/uploads/{{ $arItem->preview_picture }}" />
+                                    </a>
+                                    @endif
+                                    @if(strlen($arItem->detail_picture) > 0)
+                                    <a class="thumbLink">
+                                        <img data-large="/uploads/{{ $arItem->detail_picture }}" alt="{{ $arItem->name }}" class="img-responsive" src="/uploads/{{ $arItem->detail_picture }}" />
+                                    </a>
+                                    @endif
                                 </div>
                             </div>
     
@@ -126,22 +136,19 @@
                                         <p>{{ $arItem->preview_text }} </p>
                                     </div>
     
-{{--                                    @if (!empty($arItem["PROPERTIES"]["SIZE"]["VALUE"]))--}}
-                                    {{--<div class="productFilter productFilterLook2">--}}
-                                        {{--<div class="filterBox">--}}
-                                            {{--<p class="quantity-span">Размер:</p>--}}
-                                            {{--@ $sizeSelected = false; }}--}}
-                                            {{--<select name="size" class="hidden-select" id="size_{{ $arItem["ID"]; }}">--}}
-                                                {{--@ foreach($arItem["PROPERTIES"]["SIZE"]["VALUE"] as $key => $val): }}--}}
-                                                {{--@ if ($arItem["PROPERTIES"]["SIZE"]["DESCRIPTION"][$key] > 0): }}--}}
-{{--                                                <option data-max-quantity="{{ $arItem["PROPERTIES"]["SIZE"]["DESCRIPTION"][$key]; }}" value="{{ $val; }}" @ if(!$sizeSelected): $sizeSelected = 1; }}selected="selected"@ endif; }}>{{ $val; }}</option>--}}
-                                                {{--@ endif }}--}}
-                                                {{--@ endforeach; }}--}}
-                                            {{--</select>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--@endif--}}
-    
+
+                                    <div class="productFilter productFilterLook2">
+                                        <div class="filterBox">
+                                            <p class="quantity-span">Размер:</p>
+
+                                            <select name="size" class="hidden-select" id="size_{{ $arItem->id }}">
+                                                @foreach($arItem->sizes as $size): }}
+                                                    <option data-max-quantity="{{ $size->quantity }}" value="{{ $size->name }}">{{ $size->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="cart-actions">
                                         <div class="addto">
                                             <button class="button btn-cart cart first add_to_cart" title="В корзину" type="button" data-product-id="{{ $arItem->id }}" data-in-cart-text="В корзине">Купить</button>

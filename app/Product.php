@@ -9,7 +9,7 @@ class Product extends Model {
 
     protected $fillable = ['active', 'active_from', 'active_till', 'sort', 'name', 'preview_picture', 'preview_text', 'detail_picture', 'detail_text', 'xml_id', 'code', 'meta_title', 'meta_keywords', 'meta_description', 'parent_id', 'brand_id', 'is_new_product', 'is_sale_leader', 'price'];
 
-    protected $appends = ['url', 'delete_preview', 'delete_detail', 'currency', 'price_print'];
+    protected $appends = ['url', 'currency', 'price_print', 'available_sizes'];
 
     protected $dates = ['active_from', 'active_till'];
 
@@ -46,7 +46,12 @@ class Product extends Model {
 
     public function getPricePrintAttribute()
     {
-        return $this->attributes['price_print'] = $this->attributes['price'] . " р.";
+        return $this->attributes['price_print'] = intval($this->attributes['price']) . " р.";
+    }
+
+    public function getAvailableSizesAttribute()
+    {
+        return implode(" / ", $this->sizes()->get()->lists('name'));
     }
 
     public function scopeFindByCode($query, $code)
