@@ -62,9 +62,9 @@
 }
 .featuredPostContainer .owl-theme .owl-controls .owl-buttons div {
     font-size: 30px;
-     -webkit-border-radius: 0px;
+    -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
-     border-radius: 0px;
+    border-radius: 0px;
     height: 50px;
     line-height: 40px;
 }
@@ -274,7 +274,7 @@
 }
 
 .parallax-image-1 {
-    /*background: url(/images/discount.jpg);*/
+    background: url(/images/discount.jpg);
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -293,4 +293,7 @@
     font-weight: bold;
     /*-webkit-text-stroke-width: .5px;*/
     /*-webkit-text-stroke-color: black;*/
+}
+.red-color {
+    color: #eb5e58 !important;
 }

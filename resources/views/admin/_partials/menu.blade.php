@@ -1,4 +1,5 @@
 <ul>
+    <li><a target="_blank" href="{{ url('/') }}"><b>Перейти на сайт</b></a></li>
     <li>
         <a href="{{ url('admin') }}">Рабочий стол</a>
     </li>
