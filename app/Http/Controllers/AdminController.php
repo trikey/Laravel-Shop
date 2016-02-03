@@ -8,24 +8,29 @@ use Illuminate\Http\Request;
 use App\Blog;
 use App\Offer;
 use App\Brand;
+use App\Section;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BlogRequest;
 use App\Http\Requests\OffersRequest;
 use App\Http\Requests\BrandsRequest;
+use App\Http\Requests\SectionsRequest;
 
 class AdminController extends Controller {
 
 
-
+    /**
+     * Доступ только для авторизованных пользователей
+     */
     public function __construct(){
         $this->middleware('auth');
     }
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
+
+    /**
+     * Отобразить рабочий стол
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
 	{
 		return view('admin/index');
 	}
@@ -227,68 +232,53 @@ class AdminController extends Controller {
 
 
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+    /**
+     * Разделы каталога
+     */
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+    public function indexSections()
+    {
+        $sections = Section::paginate(10);
+        return view('admin/sections/index', compact('sections'));
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+    public function destroySections($id)
+    {
+        Section::find($id)->delete();
+        return redirect('admin/sections');
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+    public function createSections()
+    {
+        return view('admin/sections/create');
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    }
+
+    public function editSections($id)
+    {
+        $section = Section::find($id);
+        return view('admin/sections/edit', compact('section'));
+    }
+
+    public function storeSections(SectionsRequest $request)
+    {
+        $section = new Section($request->all());
+        $section->user()->associate(Auth::user())->save();
+        $this->storeImages($section, $request);
+
+        return redirect('admin/sections');
+    }
+
+    public function updateSections($id, SectionsRequest $request)
+    {
+        $section = Section::findOrFail($id);
+        $this->updateImages($section, $request);
+        $section->update($request->all());
+        $section->user()->associate(Auth::user())->update();
+        $this->storeImages($section, $request);
+
+        return redirect('admin/sections');
+    }
 
 }

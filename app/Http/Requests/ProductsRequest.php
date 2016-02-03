@@ -1,9 +1,9 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Section;
+use App\Product;
 
-class SectionRequest extends Request {
+class ProductsRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class SectionRequest extends Request {
     {
         $id = '';
         if ($this->get('code')) {
-            $article = Section::findByCode($this->get('code'))->first();
+            $article = Product::findByCode($this->get('code'))->first();
             if ($article) {
                 $id = ','.$article->id;
             }

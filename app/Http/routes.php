@@ -53,6 +53,29 @@ Route::post('admin/brands/create', ['as' => 'admin_brands_store', 'uses' => 'Adm
 Route::get('admin/brands/{id}/edit', ['as' => 'admin_brands_edit', 'uses' => 'AdminController@editBrands']);
 Route::put('admin/brands/{id}/edit', ['as' => 'admin_brands_update', 'uses' => 'AdminController@updateBrands']);
 
+Route::get('admin/sections', ['as' => 'admin_sections', 'uses' => 'AdminController@indexSections']);
+Route::delete('admin/sections/{id}', 'AdminController@destroySections');
+Route::get('admin/sections/create', ['as' => 'admin_sections_create', 'uses' => 'AdminController@createSections']);
+Route::post('admin/sections/create', ['as' => 'admin_sections_store', 'uses' => 'AdminController@storeSections']);
+Route::get('admin/sections/{id}/edit', ['as' => 'admin_sections_edit', 'uses' => 'AdminController@editSections']);
+Route::put('admin/sections/{id}/edit', ['as' => 'admin_sections_update', 'uses' => 'AdminController@updateSections']);
+
+
+Route::get('admin/products', ['as' => 'admin_products', 'uses' => 'AdminController@indexProducts']);
+Route::delete('admin/products/{id}', 'AdminController@destroyProducts');
+Route::get('admin/products/create', ['as' => 'admin_products_create', 'uses' => 'AdminController@createProducts']);
+Route::post('admin/products/create', ['as' => 'admin_products_store', 'uses' => 'AdminController@storeProducts']);
+Route::get('admin/products/{id}/edit', ['as' => 'admin_products_edit', 'uses' => 'AdminController@editProducts']);
+Route::put('admin/products/{id}/edit', ['as' => 'admin_products_update', 'uses' => 'AdminController@updateProducts']);
+
+
+Route::get('admin/sizes', ['as' => 'admin_sizes', 'uses' => 'AdminController@indexSizes']);
+Route::delete('admin/sizes/{id}', 'AdminController@destroySizes');
+Route::get('admin/sizes/create', ['as' => 'admin_sizes_create', 'uses' => 'AdminController@createSizes']);
+Route::post('admin/sizes/create', ['as' => 'admin_sizes_store', 'uses' => 'AdminController@storeSizes']);
+Route::get('admin/sizes/{id}/edit', ['as' => 'admin_sizes_edit', 'uses' => 'AdminController@editSizes']);
+Route::put('admin/sizes/{id}/edit', ['as' => 'admin_sizes_update', 'uses' => 'AdminController@updateSizes']);
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
