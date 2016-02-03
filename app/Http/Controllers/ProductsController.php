@@ -23,7 +23,12 @@ class ProductsController extends Controller {
 	public function section($sectionCode)
 	{
 		$section = Section::findByCode($sectionCode)->first();
-		$products = $section->products()->paginate(1);
+		if ($section->parent_id == null) {
+			$products = Product::whereIn('parent_id', Section::where('parent_id', '=', $section->id)->get()->lists('id'))->paginate(1);
+		}
+		else {
+			$products = $section->products()->paginate(1);
+		}
 		return view('catalog/index', compact('products'));
 	}
 
