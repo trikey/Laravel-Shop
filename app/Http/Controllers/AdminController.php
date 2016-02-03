@@ -346,4 +346,56 @@ class AdminController extends Controller {
         return redirect('admin/products');
     }
 
+
+    /**
+     * Размеры товаров каталога
+     */
+
+    public function indexSizes()
+    {
+        $sizes = Size::paginate(20);
+        return view('admin/sizes/index', compact('sizes'));
+    }
+
+    public function destroySizes($id)
+    {
+        Size::find($id)->delete();
+        return redirect('admin/sizes');
+    }
+
+    public function createSizes()
+    {
+        $products = Product::get()->lists('name', 'id');
+        return view('admin/sizes/create', compact('sizes', 'products'));
+
+    }
+
+    public function editSizes($id)
+    {
+        $size = Size::find($id);
+        $products = Product::get()->lists('name', 'id');
+
+        return view('admin/sizes/edit', compact('size', 'products'));
+    }
+
+    public function storeSizes(SizesRequest $request)
+    {
+        $size = new Size($request->all());
+        $size->user()->associate(Auth::user())->save();
+        $this->storeImages($size, $request);
+
+        return redirect('admin/sizes');
+    }
+
+    public function updateSizes($id, SizesRequest $request)
+    {
+        $size = Size::findOrFail($id);
+        $this->updateImages($size, $request);
+        $size->update($request->all());
+        $size->user()->associate(Auth::user())->update();
+        $this->storeImages($size, $request);
+
+        return redirect('admin/sizes');
+    }
+
 }

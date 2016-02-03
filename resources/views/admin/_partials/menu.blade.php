@@ -17,4 +17,7 @@
     <li>
         <a href="{{ url('admin/products') }}">Товары каталога</a>
     </li>
+    <li>
+        <a href="{{ url('admin/sizes') }}">Размеры товаров каталога</a>
+    </li>
 </ul>
