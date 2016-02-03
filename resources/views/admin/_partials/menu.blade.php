@@ -14,4 +14,7 @@
     <li>
         <a href="{{ url('admin/sections') }}">Разделы каталога</a>
     </li>
+    <li>
+        <a href="{{ url('admin/products') }}">Товары каталога</a>
+    </li>
 </ul>

@@ -29,11 +29,11 @@ class CreateProductsTable extends Migration {
 			$table->string('meta_keywords')->nullable();
 			$table->string('meta_description')->nullable();
 			$table->integer('modified_by')->unsigned();
-			$table->integer('brand_id')->unsigned()->nullable();
+			$table->integer('brand_id')->unsigned()->nullable()->default(null);
 			$table->integer('is_new_product')->unsigned()->nullable();
 			$table->integer('is_sale_leader')->unsigned()->nullable();
 			$table->decimal('price')->unsigned()->nullable();
-            $table->integer('parent_id')->unsigned()->default(0);
+            $table->integer('parent_id')->unsigned()->nullable()->default(null);
 			$table->timestamps();
 
 			$table->foreign('modified_by')->references('id')->on('users');

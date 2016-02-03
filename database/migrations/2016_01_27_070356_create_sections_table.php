@@ -29,7 +29,7 @@ class CreateSectionsTable extends Migration {
             $table->string('meta_keywords')->nullable();
             $table->string('meta_description')->nullable();
             $table->integer('modified_by')->unsigned();
-            $table->integer('parent_id')->unsigned()->default(0);
+            $table->integer('parent_id')->unsigned()->nullable()->default(null);
             $table->timestamps();
 
             $table->foreign('modified_by')->references('id')->on('users');

@@ -9,11 +9,15 @@ use App\Blog;
 use App\Offer;
 use App\Brand;
 use App\Section;
+use App\Product;
+use App\Size;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BlogRequest;
 use App\Http\Requests\OffersRequest;
 use App\Http\Requests\BrandsRequest;
 use App\Http\Requests\SectionsRequest;
+use App\Http\Requests\ProductsRequest;
+use App\Http\Requests\SizesRequest;
 
 class AdminController extends Controller {
 
@@ -251,14 +255,17 @@ class AdminController extends Controller {
 
     public function createSections()
     {
-        return view('admin/sections/create');
+        $sections = [''=>''] + Section::get()->lists('name', 'id');
+        return view('admin/sections/create', compact('sections'));
 
     }
 
     public function editSections($id)
     {
         $section = Section::find($id);
-        return view('admin/sections/edit', compact('section'));
+        $sections = [''=>''] + Section::where('id', '!=', $id)->get()->lists('name', 'id');
+
+        return view('admin/sections/edit', compact('section', 'sections'));
     }
 
     public function storeSections(SectionsRequest $request)
@@ -279,6 +286,64 @@ class AdminController extends Controller {
         $this->storeImages($section, $request);
 
         return redirect('admin/sections');
+    }
+
+
+
+
+
+
+    /**
+     * Товары каталога
+     */
+
+    public function indexProducts()
+    {
+        $products = Product::paginate(10);
+        return view('admin/products/index', compact('products'));
+    }
+
+    public function destroyProducts($id)
+    {
+        Product::find($id)->delete();
+        return redirect('admin/products');
+    }
+
+    public function createProducts()
+    {
+        $sections = [''=>''] + Section::get()->lists('name', 'id');
+        $brands = [''=>''] + Brand::get()->lists('name', 'id');
+        return view('admin/products/create', compact('sections', 'brands'));
+
+    }
+
+    public function editProducts($id)
+    {
+        $product = Product::find($id);
+        $sections = [''=>''] + Section::get()->lists('name', 'id');
+        $brands = [''=>''] + Brand::get()->lists('name', 'id');
+
+        return view('admin/products/edit', compact('product', 'sections', 'brands'));
+    }
+
+    public function storeProducts(ProductsRequest $request)
+    {
+        $product = new Product($request->all());
+        $product->user()->associate(Auth::user())->save();
+        $this->storeImages($product, $request);
+
+        return redirect('admin/products');
+    }
+
+    public function updateProducts($id, ProductsRequest $request)
+    {
+        $product = Product::findOrFail($id);
+        $this->updateImages($product, $request);
+        $product->update($request->all());
+        $product->user()->associate(Auth::user())->update();
+        $this->storeImages($product, $request);
+
+        return redirect('admin/products');
     }
 
 }

@@ -31,4 +31,8 @@ class Section extends Model {
     {
         return $query->where('code', '=', $code);
     }
+
+    public function setParentIdAttribute($value){
+        $this->attributes['parent_id'] = $value == "" ? null : $value;
+    }
 }
