@@ -33,7 +33,7 @@ class OffersRequest extends Request {
         return [
             'name' => 'required',
             'preview_picture' => 'mimes:jpeg,png,jpg',
-            'code' => 'required|unique:blog,code'.$id
+            'code' => 'required|unique:offers,code'.$id
         ];
     }
 

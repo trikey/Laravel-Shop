@@ -1,9 +1,9 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Brand;
+use App\Section;
 
-class BrandsRequest extends Request {
+class SectionRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class BrandsRequest extends Request {
     {
         $id = '';
         if ($this->get('code')) {
-            $article = Brand::findByCode($this->get('code'))->first();
+            $article = Section::findByCode($this->get('code'))->first();
             if ($article) {
                 $id = ','.$article->id;
             }
@@ -33,7 +33,7 @@ class BrandsRequest extends Request {
         return [
             'name' => 'required',
             'preview_picture' => 'mimes:jpeg,png,jpg',
-            'code' => 'required|unique:brands,code'.$id
+            'code' => 'required|unique:sections,code'.$id
         ];
     }
 

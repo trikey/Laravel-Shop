@@ -26,7 +26,7 @@
     {!! Form::text('sort', null, array('placeholder'=>'500', 'class' => 'form-control')) !!}
 </div>
 <div class="form-group">
-    @if(isset($article) && isset($article->preview_picture))
+    @if(isset($article) && isset($article->preview_picture) && file_exists($_SERVER["DOCUMENT_ROOT"]."/uploads/".$article->preview_picture))
         <img src="/uploads/{{ $article->preview_picture }}" width="200" alt="{{ $article->name }}"><br>
         <div class="checkbox">
             <label>
@@ -42,7 +42,7 @@
     {!! Form::textarea('preview_text', null, array('class' => 'form-control', 'rows' => 3)) !!}
 </div>
 <div class="form-group">
-    @if(isset($article) && isset($article->detail_picture))
+    @if(isset($article) && isset($article->detail_picture) && file_exists($_SERVER["DOCUMENT_ROOT"]."/uploads/".$article->detail_picture))
         <img src="/uploads/{{ $article->detail_picture }}" width="200" alt="{{ $article->name }}"><br>
         <div class="checkbox">
             <label>

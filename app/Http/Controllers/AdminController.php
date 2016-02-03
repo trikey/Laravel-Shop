@@ -30,6 +30,49 @@ class AdminController extends Controller {
 		return view('admin/index');
 	}
 
+    /**
+     *
+     * Save preview and detail image
+     *
+     * @param $model
+     * @param $request
+     */
+    private function storeImages(&$model, $request)
+    {
+        if ($request->file('preview_picture')) {
+            $imageName = $model->id . '_prev_' . time() . '.' . $request->file('preview_picture')->getClientOriginalExtension();
+            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $model->preview_picture = $imageName;
+            $model->save();
+        }
+        if ($request->file('detail_picture')) {
+            $imageName = $model->id . '_detail_' . time() . '.' . $request->file('detail_picture')->getClientOriginalExtension();
+            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
+            $model->detail_picture = $imageName;
+            $model->save();
+        }
+    }
+
+    /**
+     *
+     * Remove preview and detail images if it is necessary
+     *
+     * @param $model
+     * @param $request
+     */
+    private function updateImages(&$model, $request)
+    {
+        if ($request->get('delete_preview') || $request->file('preview_picture')) {
+            @unlink(base_path() . '/public/uploads/'.$model->preview_picture);
+            $model->preview_picture = NULL;
+            $model->update();
+        }
+        if ($request->get('delete_detail') || $request->file('detail_picture')) {
+            @unlink(base_path() . '/public/uploads/'.$model->detail_picture);
+            $model->detail_picture = NULL;
+            $model->update();
+        }
+    }
 
     /**
      * Новости
@@ -54,73 +97,29 @@ class AdminController extends Controller {
         return view('admin/news/create');
     }
 
-    public function storeNews(BlogRequest $request)
-    {
-        $article = new Blog($request->all());
-        $user = Auth::user();
-
-        $article->user()->associate($user);
-
-        $article->save();
-
-        if ($request->file('preview_picture')) {
-            $imageName = $article->id . '_prev_article.' . $request->file('preview_picture')->getClientOriginalExtension();
-            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $article->preview_picture = $imageName;
-            $article->save();
-        }
-        if ($request->file('detail_picture')) {
-            $imageName = $article->id . '_detail_article.' . $request->file('detail_picture')->getClientOriginalExtension();
-            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $article->detail_picture = $imageName;
-            $article->save();
-        }
-
-        return redirect('admin/news');
-
-
-    }
-
     public function editNews($id)
     {
         $article = Blog::find($id);
         return view('admin/news/edit', compact('article'));
     }
 
+    public function storeNews(BlogRequest $request)
+    {
+        $article = new Blog($request->all());
+        $article->user()->associate(Auth::user())->save();
+        $this->storeImages($article, $request);
+
+        return redirect('admin/news');
+    }
+
     public function updateNews($id, BlogRequest $request)
     {
         $article = Blog::findOrFail($id);
-
+        $this->updateImages($article, $request);
         $article->update($request->all());
-        $user = Auth::user();
-        $article->user()->associate($user);
-        $article->update();
+        $article->user()->associate(Auth::user())->update();
+        $this->storeImages($article, $request);
 
-        if ($request->get('delete_preview')) {
-            @unlink(base_path() . '/public/uploads/'.$article->preview_picture);
-            $article->preview_picture = NULL;
-            $article->update();
-        }
-        if ($request->get('delete_detail')) {
-            @unlink(base_path() . '/public/uploads/'.$article->detail_picture);
-            $article->detail_picture = NULL;
-            $article->update();
-        }
-
-        if ($request->file('preview_picture')) {
-            @unlink(base_path() . '/public/uploads/'.$article->preview_picture);
-            $imageName = $article->id . '_prev_article.' . $request->file('preview_picture')->getClientOriginalExtension();
-            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $article->preview_picture = $imageName;
-            $article->update();
-        }
-        if ($request->file('detail_picture')) {
-            @unlink(base_path() . '/public/uploads/'.$article->detail_picture);
-            $imageName = $article->id . '_detail_article.' . $request->file('detail_picture')->getClientOriginalExtension();
-            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $article->detail_picture = $imageName;
-            $article->update();
-        }
         return redirect('admin/news');
     }
 
@@ -148,71 +147,29 @@ class AdminController extends Controller {
 
     }
 
-    public function storeOffers(OffersRequest $request)
-    {
-        $offer = new Offer($request->all());
-        $user = Auth::user();
-
-        $offer->user()->associate($user);
-
-        $offer->save();
-
-        if ($request->file('preview_picture')) {
-            $imageName = $offer->id . '_prev_offer.' . $request->file('preview_picture')->getClientOriginalExtension();
-            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $offer->preview_picture = $imageName;
-            $offer->save();
-        }
-        if ($request->file('detail_picture')) {
-            $imageName = $offer->id . '_detail_offer.' . $request->file('detail_picture')->getClientOriginalExtension();
-            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $offer->detail_picture = $imageName;
-            $offer->save();
-        }
-
-        return redirect('admin/offers');
-    }
-
     public function editOffers($id)
     {
         $offer = Offer::find($id);
         return view('admin/offers/edit', compact('offer'));
     }
 
+    public function storeOffers(OffersRequest $request)
+    {
+        $offer = new Offer($request->all());
+        $offer->user()->associate(Auth::user())->save();
+        $this->storeImages($offer, $request);
+
+        return redirect('admin/offers');
+    }
+
     public function updateOffers($id, OffersRequest $request)
     {
         $offer = Offer::findOrFail($id);
-
+        $this->updateImages($offer, $request);
         $offer->update($request->all());
-        $user = Auth::user();
-        $offer->user()->associate($user);
-        $offer->update();
+        $offer->user()->associate(Auth::user())->update();
+        $this->storeImages($offer, $request);
 
-        if ($request->get('delete_preview')) {
-            @unlink(base_path() . '/public/uploads/'.$offer->preview_picture);
-            $offer->preview_picture = NULL;
-            $offer->update();
-        }
-        if ($request->get('delete_detail')) {
-            @unlink(base_path() . '/public/uploads/'.$offer->detail_picture);
-            $offer->detail_picture = NULL;
-            $offer->update();
-        }
-
-        if ($request->file('preview_picture')) {
-            @unlink(base_path() . '/public/uploads/'.$offer->preview_picture);
-            $imageName = $offer->id . '_prev_offer.' . $request->file('preview_picture')->getClientOriginalExtension();
-            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $offer->preview_picture = $imageName;
-            $offer->update();
-        }
-        if ($request->file('detail_picture')) {
-            @unlink(base_path() . '/public/uploads/'.$offer->detail_picture);
-            $imageName = $offer->id . '_detail_offer.' . $request->file('detail_picture')->getClientOriginalExtension();
-            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $offer->detail_picture = $imageName;
-            $offer->update();
-        }
         return redirect('admin/offers');
     }
 
@@ -242,71 +199,29 @@ class AdminController extends Controller {
 
     }
 
-    public function storeBrands(BrandsRequest $request)
-    {
-        $brand = new Brand($request->all());
-        $user = Auth::user();
-
-        $brand->user()->associate($user);
-
-        $brand->save();
-
-        if ($request->file('preview_picture')) {
-            $imageName = $brand->id . '_prev_offer.' . $request->file('preview_picture')->getClientOriginalExtension();
-            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $brand->preview_picture = $imageName;
-            $brand->save();
-        }
-        if ($request->file('detail_picture')) {
-            $imageName = $brand->id . '_detail_offer.' . $request->file('detail_picture')->getClientOriginalExtension();
-            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $brand->detail_picture = $imageName;
-            $brand->save();
-        }
-
-        return redirect('admin/brands');
-    }
-
     public function editBrands($id)
     {
         $brand = Brand::find($id);
         return view('admin/brands/edit', compact('brand'));
     }
 
+    public function storeBrands(BrandsRequest $request)
+    {
+        $brand = new Brand($request->all());
+        $brand->user()->associate(Auth::user())->save();
+        $this->storeImages($brand, $request);
+
+        return redirect('admin/brands');
+    }
+
     public function updateBrands($id, BrandsRequest $request)
     {
         $brand = Brand::findOrFail($id);
-
+        $this->updateImages($brand, $request);
         $brand->update($request->all());
-        $user = Auth::user();
-        $brand->user()->associate($user);
-        $brand->update();
+        $brand->user()->associate(Auth::user())->update();
+        $this->storeImages($brand, $request);
 
-        if ($request->get('delete_preview')) {
-            @unlink(base_path() . '/public/uploads/'.$brand->preview_picture);
-            $brand->preview_picture = NULL;
-            $brand->update();
-        }
-        if ($request->get('delete_detail')) {
-            @unlink(base_path() . '/public/uploads/'.$brand->detail_picture);
-            $brand->detail_picture = NULL;
-            $brand->update();
-        }
-
-        if ($request->file('preview_picture')) {
-            @unlink(base_path() . '/public/uploads/'.$brand->preview_picture);
-            $imageName = $brand->id . '_prev_offer.' . $request->file('preview_picture')->getClientOriginalExtension();
-            $request->file('preview_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $brand->preview_picture = $imageName;
-            $brand->update();
-        }
-        if ($request->file('detail_picture')) {
-            @unlink(base_path() . '/public/uploads/'.$brand->detail_picture);
-            $imageName = $brand->id . '_detail_offer.' . $request->file('detail_picture')->getClientOriginalExtension();
-            $request->file('detail_picture')->move(base_path() . '/public/uploads/', $imageName);
-            $brand->detail_picture = $imageName;
-            $brand->update();
-        }
         return redirect('admin/brands');
     }
 
