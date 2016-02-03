@@ -74,6 +74,10 @@
     {!! Form::textarea('meta_description', null, array('placeholder'=>'description', 'class' => 'form-control', 'rows' => 3)) !!}
 </div>
 <div class="form-group">
+    {!! Form::label('Цена') !!}
+    {!! Form::text('price', null, array('class' => 'form-control')) !!}
+</div>
+<div class="form-group">
     {!! Form::label('Категория') !!}
     {!! Form::select('parent_id', $sections, null, array('class' => 'form-control')) !!}
 </div>
