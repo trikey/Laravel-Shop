@@ -4,42 +4,98 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use App\Product;
+use Session;
 
 class CartController extends Controller {
 
     public function addToCart(Request $request)
     {
-        dd($request->all());
-
-        /*
-        if session.products
-            if session.products[product_id]
-                session.products[product_id] += quantity
+        $id = $request->get('product_id');
+        $quantity = $request->get('quantity');
+        if (!$quantity)
+        {
+            $quantity = 1;
+        }
+        $product = Product::find($id);
+        if ($product) {
+            if (Session::has('products'))
+            {
+                $products = Session::get('products');
+                if(array_key_exists($id, $products))
+                {
+                    $products[$id] += $quantity;
+                }
+                else
+                {
+                    $products[$id] = $quantity;
+                }
+            }
             else
-                session.products[product_id] = quantity
-        else
-            session.products = []
-            session.products[product_id] = quantity
-        */
+            {
+                $products = [];
+                $products[$id] = $quantity;
+            }
+            Session::put('products', $products);
+            Session::save();
+        }
+
     }
 
     public function updateCart(Request $request)
     {
-        /*
-         * if session.products
-				if session.products[basket_id]
-					session.products[basket_id] = quantity
-				else
-					session.products[basket_id] = quantity
-			else
-				session.products = []
-				session.products[basket_id] = quantity
-         */
+        $id = $request->get('product_id');
+        $quantity = $request->get('quantity');
+        if (!$quantity)
+        {
+            $quantity = 1;
+        }
+        $product = Product::find($id);
+        if ($product) {
+            if (Session::has('products'))
+            {
+                $products = Session::get('products');
+                if(array_key_exists($id, $products))
+                {
+                    $products[$id] = $quantity;
+                }
+                else
+                {
+                    $products[$id] = $quantity;
+                }
+            }
+            else
+            {
+                $products = [];
+                $products[$id] = $quantity;
+            }
+            Session::put('products', $products);
+            Session::save();
+        }
+
     }
 
     public function deleteFromCart(Request $request)
     {
-        // delete session.products[basket_id]
+        $id = $request->get('product_id');
+        $product = Product::find($id);
+        if ($product) {
+            if (Session::has('products'))
+            {
+                $products = Session::get('products');
+                if(array_key_exists($id, $products))
+                {
+                    unset($products[$id]);
+                }
+                else
+                {
+                    unset($products[$id]);
+                }
+                Session::put('products', $products);
+                Session::save();
+            }
+        }
+
     }
 
     public function getSmallCart(Request $request)
