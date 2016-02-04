@@ -15,6 +15,15 @@ Breadcrumbs::register('home', function($breadcrumbs)
 });
 
 /**
+ * 404 Page
+ */
+Breadcrumbs::register('', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('404', '#');
+});
+
+/**
  * Home > Blog
  */
 Breadcrumbs::register('blog.blog.index', function($breadcrumbs)
