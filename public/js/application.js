@@ -536,7 +536,7 @@
       $('#buy_in_one_click_product_id').val(product_card);
       return $('#product-details-modal').modal('hide');
     });
-    return $('#buy_in_one_click_submit_btn').click(function() {
+    $('#buy_in_one_click_submit_btn').click(function() {
       var error, form, thanks;
       form = $('#buy_in_one_click_form');
       thanks = $('#thanks_buy_one_click');
@@ -564,6 +564,15 @@
         }
       });
       return false;
+    });
+    return $('.slider-v1').cycle({
+      fx: 'scrollHorz',
+      slides: '.slider-item',
+      timeout: 200000,
+      speed: 1200,
+      easeIn: 'easeInOutExpo',
+      easeOut: 'easeInOutExpo',
+      pager: '#pager2'
     });
   });
 

@@ -63,4 +63,19 @@ class Product extends Model {
     {
         return $query->where('code', '=', $code);
     }
+
+    public function scopeNewProducts($query)
+    {
+        return $query->where('is_new_product', '=', 1);
+    }
+
+    public function scopeSaleLeaderProducts($query)
+    {
+        return $query->where('is_sale_leader', '=', 1);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', '=', 1);
+    }
 }

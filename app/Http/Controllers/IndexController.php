@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Input;
 use Auth;
 use Illuminate\Http\Request;
+use \App\Product;
 
 class IndexController extends Controller {
 
@@ -18,7 +19,9 @@ class IndexController extends Controller {
         if (Input::get('logout')) {
             Auth::logout();
         }
-        return view('index');
+        $newProducts = Product::Active()->NewProducts()->get();
+        $saleLeaderProducts = Product::Active()->SaleLeaderProducts()->get();
+        return view('index', compact('newProducts', 'saleLeaderProducts'));
 	}
 
 	/**

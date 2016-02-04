@@ -535,6 +535,16 @@ $ ->
                     text = 'good'
         false
 
+
+    $('.slider-v1').cycle
+        fx: 'scrollHorz'
+        slides: '.slider-item'
+        timeout: 200000
+        speed: 1200
+        easeIn: 'easeInOutExpo'
+        easeOut: 'easeInOutExpo'
+        pager: '#pager2'
+
 #    $('.order_method').change ->
 #        val = $(this).val()
 #        if val == 'order_call_center'
