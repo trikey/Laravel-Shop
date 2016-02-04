@@ -27,7 +27,7 @@
     <link href="{{ asset('/assets/css/skin-6.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/bootstrap-slider.css') }}"/>
     <script type="text/javascript" src="{{ asset('/assets/js/jquery/jquery-1.10.1.min.js') }}"></script>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 

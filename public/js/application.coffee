@@ -1,8 +1,11 @@
 $ ->
+    $.ajaxSetup
+        headers:
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 
     getTopCart = ->
         $.ajax
-            url: "/ajax/cart.php"
+            url: "/ajax/cart/getsmall"
             data:
                 act: "get_top_cart"
             type: "POST"
@@ -12,7 +15,7 @@ $ ->
 
     getOrder = ->
         $.ajax
-            url: "/ajax/cart.php"
+            url: "/ajax/cart/getorder"
             data:
                 act: "get_order"
             type: "POST"
@@ -61,7 +64,7 @@ $ ->
             return false
 
         $.ajax
-            url: "/ajax/cart.php"
+            url: "/ajax/cart/add"
             data:
                 act: "add2cart",
                 product_id: product_id,
@@ -181,7 +184,7 @@ $ ->
     $(document).on "click", ".delete_cart_item", ->
         basket_id = $(this).attr "data-basket-id";
         $.ajax
-            url: "/ajax/cart.php"
+            url: "/ajax/cart/delete"
             data:
                 act: "delete"
                 basket_id: basket_id
@@ -191,7 +194,7 @@ $ ->
             $('#top_cart_desctop').addClass('hover')
             updateScrollBars()
             $.ajax
-                url: "/ajax/cart.php"
+                url: "/ajax/cart/getbig"
                 data:
                     act: "get_cart"
                 type: "POST"
@@ -220,7 +223,7 @@ $ ->
         quantity = $this.val();
         timer = setTimeout ( ->
             $.ajax
-                url: "/ajax/cart.php"
+                url: "/ajax/cart/update/"
                 data:
                     basket_id: basket_id
                     act: "main_update"
@@ -237,7 +240,7 @@ $ ->
     $(document).on "click", ".delete_main_item", ->
         basket_id = $(this).attr "data-basket-id"
         $.ajax
-            url: "/ajax/cart.php"
+            url: "/ajax/cart/delete"
             data:
                 act: "main_delete"
                 basket_id: basket_id

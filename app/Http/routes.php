@@ -17,6 +17,12 @@
 //Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
 Route::post('ajax/login.php', '\App\Http\Controllers\Auth\AuthController@authenticate');
 Route::post('ajax/register.php', '\App\Http\Controllers\Auth\AuthController@register');
+Route::post('ajax/cart/add', 'CartController@addToCart');
+Route::post('ajax/cart/update', 'CartController@updateCart');
+Route::post('ajax/cart/delete', 'CartController@deleteFromCart');
+Route::get('ajax/cart/getsmall', 'CartController@getSmallCart');
+Route::get('ajax/cart/getbig', 'CartController@getBigCart');
+Route::get('ajax/cart/getorder', 'CartController@getOrder');
 
 Route::resource('blog', 'BlogController', ['as' => 'blog']);
 Route::resource('aktsii', 'OffersController', ['as' => 'offers']);

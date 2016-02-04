@@ -2,9 +2,14 @@
 (function() {
   $(function() {
     var cart_path, doneClickingInterval, getOrder, getTopCart, imageShowCase, isMobile, mySwiper, options, owl, parallaxScroll, pshowcase, swiper_container, timer, touchSpin, tshopScroll, updateScrollBars;
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
     getTopCart = function() {
       return $.ajax({
-        url: "/ajax/cart.php",
+        url: "/ajax/cart/getsmall",
         data: {
           act: "get_top_cart"
         },
@@ -17,7 +22,7 @@
     };
     getOrder = function() {
       return $.ajax({
-        url: "/ajax/cart.php",
+        url: "/ajax/cart/getorder",
         data: {
           act: "get_order"
         },
@@ -73,7 +78,7 @@
         return false;
       }
       $.ajax({
-        url: "/ajax/cart.php",
+        url: "/ajax/cart/add",
         data: {
           act: "add2cart",
           product_id: product_id,
@@ -197,7 +202,7 @@
       var basket_id;
       basket_id = $(this).attr("data-basket-id");
       $.ajax({
-        url: "/ajax/cart.php",
+        url: "/ajax/cart/delete",
         data: {
           act: "delete",
           basket_id: basket_id
@@ -208,7 +213,7 @@
         $('#top_cart_desctop').addClass('hover');
         updateScrollBars();
         return $.ajax({
-          url: "/ajax/cart.php",
+          url: "/ajax/cart/getbig",
           data: {
             act: "get_cart"
           },
@@ -238,7 +243,7 @@
       quantity = $this.val();
       return timer = setTimeout((function() {
         return $.ajax({
-          url: "/ajax/cart.php",
+          url: "/ajax/cart/update/",
           data: {
             basket_id: basket_id,
             act: "main_update",
@@ -257,7 +262,7 @@
       var basket_id;
       basket_id = $(this).attr("data-basket-id");
       $.ajax({
-        url: "/ajax/cart.php",
+        url: "/ajax/cart/delete",
         data: {
           act: "main_delete",
           basket_id: basket_id
