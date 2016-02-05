@@ -112,16 +112,34 @@ class CartController extends Controller {
 
     }
 
+    private function prepareCartData()
+    {
+        $data = ['cartItems' => [], 'allSumFormatted' => 0];
+        if (Session::has('products'))
+        {
+            $products = Session::get('products');
+            $productIds = [];
+            foreach($products as $key => $value)
+            {
+                $idAndSize = explode('_', $key);
+                $productIds[] = $idAndSize[0];
+            }
+        }
+        return $data;
+    }
+
     public function getSmallCart()
     {
-        $cartItems = [];
-        $allSumFormatted = 0;
+        $data = $this->prepareCartData();
+        $cartItems = $data['cartItems'];
+        $allSumFormatted = $data['allSumFormatted'];
         echo view('cart/top', compact('cartItems', 'allSumFormatted'));
     }
     public function getSmallCartView($view)
     {
-        $cartItems = [];
-        $allSumFormatted = 0;
+        $data = $this->prepareCartData();
+        $cartItems = $data['cartItems'];
+        $allSumFormatted = $data['allSumFormatted'];
         $view->with(compact('cartItems', 'allSumFormatted'));
     }
     public function getBigCart(Request $request)
