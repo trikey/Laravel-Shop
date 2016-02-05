@@ -11,8 +11,8 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
-	}
+        view()->composer('cart/top', '\App\Http\Controllers\CartController@getSmallCartView');
+    }
 
 	/**
 	 * Register any application services.

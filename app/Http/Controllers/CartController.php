@@ -13,6 +13,12 @@ class CartController extends Controller {
     {
         $id = $request->get('product_id');
         $quantity = $request->get('quantity');
+        $props = $request->get('props');
+        $size = '_';
+        if (is_array($props) && isset($props['size']))
+        {
+            $size .= $props['size'];
+        }
         if (!$quantity)
         {
             $quantity = 1;
@@ -24,28 +30,35 @@ class CartController extends Controller {
                 $products = Session::get('products');
                 if(array_key_exists($id, $products))
                 {
-                    $products[$id] += $quantity;
+                    $products[$id.$size] += $quantity;
                 }
                 else
                 {
-                    $products[$id] = $quantity;
+                    $products[$id.$size] = $quantity;
                 }
             }
             else
             {
                 $products = [];
-                $products[$id] = $quantity;
+                $products[$id.$size] = $quantity;
             }
             Session::put('products', $products);
             Session::save();
         }
-
+        $this->getSmallCart();
     }
 
     public function updateCart(Request $request)
     {
-        $id = $request->get('product_id');
+        $cart_id = $request->get('cart_id');
         $quantity = $request->get('quantity');
+        $idArray = explode('_', $cart_id);
+        $id = $idArray[0];
+        $size = '_';
+        if (is_array($idArray) && strlen($idArray[1]) > 0)
+        {
+            $size .= $idArray[1];
+        }
         if (!$quantity)
         {
             $quantity = 1;
@@ -57,17 +70,17 @@ class CartController extends Controller {
                 $products = Session::get('products');
                 if(array_key_exists($id, $products))
                 {
-                    $products[$id] = $quantity;
+                    $products[$id.$size] = $quantity;
                 }
                 else
                 {
-                    $products[$id] = $quantity;
+                    $products[$id.$size] = $quantity;
                 }
             }
             else
             {
                 $products = [];
-                $products[$id] = $quantity;
+                $products[$id.$size] = $quantity;
             }
             Session::put('products', $products);
             Session::save();
@@ -77,8 +90,9 @@ class CartController extends Controller {
 
     public function deleteFromCart(Request $request)
     {
-        $id = $request->get('product_id');
-        $product = Product::find($id);
+        $id = $request->get('cart_id');
+        $idArray = explode('_', $id);
+        $product = Product::find($idArray[0]);
         if ($product) {
             if (Session::has('products'))
             {
@@ -98,9 +112,17 @@ class CartController extends Controller {
 
     }
 
-    public function getSmallCart(Request $request)
+    public function getSmallCart()
     {
-
+        $cartItems = [];
+        $allSumFormatted = 0;
+        echo view('cart/top', compact('cartItems', 'allSumFormatted'));
+    }
+    public function getSmallCartView($view)
+    {
+        $cartItems = [];
+        $allSumFormatted = 0;
+        $view->with(compact('cartItems', 'allSumFormatted'));
     }
     public function getBigCart(Request $request)
     {
