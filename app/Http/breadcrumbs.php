@@ -24,12 +24,22 @@ Breadcrumbs::register('', function($breadcrumbs)
 });
 
 /**
- * 404 Page
+ * Cart Page
  */
 Breadcrumbs::register('cart', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
     $breadcrumbs->push('Корзина', route('cart'));
+});
+
+
+/**
+ * Order making page
+ */
+Breadcrumbs::register('order_make', function($breadcrumbs)
+{
+    $breadcrumbs->parent('cart');
+    $breadcrumbs->push('Оформление заказа', route('order_make'));
 });
 
 /**

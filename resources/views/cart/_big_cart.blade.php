@@ -55,7 +55,7 @@
                         <div class="pull-left">
                             <a href="/catalog/" class="btn btn-default"> <i class="fa fa-arrow-left"></i> &nbsp; Продолжить покупки </a>
                             @if(Request::url() != 'http://baus.local/personal/order/make')
-                                <a class="btn btn-primary" title="checkout" href="/personal/order/make/">Оформить заказ &nbsp;<i class="fa fa-arrow-right"></i> </a>
+                                <a class="btn btn-primary" title="checkout" href="/personal/order/make">Оформить заказ &nbsp;<i class="fa fa-arrow-right"></i> </a>
                             @endif
                         </div>
                         <div class="pull-right">

@@ -43,8 +43,8 @@
 
                     Итого: {{ $allSumFormatted }}
                 </h3>
-                <a class="btn btn-sm btn-primary" href="/personal/cart/" onclick="window.location=$(this).attr('href');"> В корзину </a>
-                <a class="btn btn-sm btn-danger" href="/personal/order/make/" onclick="window.location=$(this).attr('href');"> <i class="fa fa-shopping-cart"> </i> Оформить заказ </a>
+                <a class="btn btn-sm btn-primary" href="/personal/cart" onclick="window.location=$(this).attr('href');"> В корзину </a>
+                <a class="btn btn-sm btn-danger" href="/personal/order/make" onclick="window.location=$(this).attr('href');"> <i class="fa fa-shopping-cart"> </i> Оформить заказ </a>
             </div>
             @else
                 <p class="center-block margin-left-10px">Ваша корзина пуста</p>
@@ -91,7 +91,7 @@
             <h3 class="text-right subtotal">
                 Итого: {{ $allSumFormatted }}
             </h3>
-            <a class="btn btn-sm btn-danger" href="/personal/cart/" onclick="window.location=$(this).attr('href');"> <i class="fa fa-shopping-cart"> </i> Оформить заказ </a>
+            <a class="btn btn-sm btn-danger" href="/personal/cart" onclick="window.location=$(this).attr('href');"> <i class="fa fa-shopping-cart"> </i> Оформить заказ </a>
         </div>
 
         @else

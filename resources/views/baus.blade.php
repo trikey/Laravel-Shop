@@ -136,7 +136,7 @@
 </div>
 
 <div id="top_cart">
-@include('cart/top')
+@include('cart/_top')
 </div>
 <!--/.nav-collapse -->
 
