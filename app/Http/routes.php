@@ -22,7 +22,10 @@ Route::post('ajax/cart/update', 'CartController@updateCart');
 Route::post('ajax/cart/delete', 'CartController@deleteFromCart');
 Route::get('ajax/cart/getsmall', 'CartController@getSmallCart');
 Route::get('ajax/cart/getbig', 'CartController@getBigCart');
+Route::post('ajax/cart/getbig', 'CartController@getBigCart');
 Route::get('ajax/cart/getorder', 'CartController@getOrder');
+
+Route::get('personal/cart', ['as' => 'cart', 'uses' => 'CartController@index']);
 
 Route::resource('blog', 'BlogController', ['as' => 'blog']);
 Route::resource('aktsii', 'OffersController', ['as' => 'offers']);

@@ -88,6 +88,7 @@
 <div class="form-group">
     <div class="checkbox">
         <label>
+            {!! Form::hidden('is_new_product', '0') !!}
             {!! Form::checkbox('is_new_product', 1, false) !!} <b>Новинка</b>
         </label>
     </div>
@@ -95,6 +96,7 @@
 <div class="form-group">
     <div class="checkbox">
         <label>
+            {!! Form::hidden('is_sale_leader', '0') !!}
             {!! Form::checkbox('is_sale_leader', 1, false) !!} <b>Лидер продаж</b>
         </label>
     </div>

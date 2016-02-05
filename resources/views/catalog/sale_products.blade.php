@@ -96,8 +96,9 @@
                                     <p class="quantity-span">Размер:</p>
 
                                     <select name="size" class="hidden-select" id="size_{{ $arItem->id }}">
-                                        @foreach($arItem->sizes as $size): }}
-                                            <option data-max-quantity="{{ $size->quantity }}" value="{{ $size->name }}">{{ $size->name }}</option>
+                                    <? $selected = false; ?>
+                                        @foreach($arItem->sizes as $size)
+                                            <option data-max-quantity="{{ $size->quantity }}" @if(!$selected) <? $selected = true; ?> selected="selected"@endif value="{{ $size->name }}">{{ $size->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

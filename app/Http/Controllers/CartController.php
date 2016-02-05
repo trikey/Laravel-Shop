@@ -9,6 +9,14 @@ use Session;
 
 class CartController extends Controller {
 
+    public function index()
+    {
+        $data = $this->prepareCartData();
+        $cartItems = $data['cartItems'];
+        $allSumFormatted = $data['allSumFormatted'];
+        echo view('cart/big', compact('cartItems', 'allSumFormatted'));
+    }
+
     public function addToCart(Request $request)
     {
         $id = $request->get('product_id');
@@ -28,7 +36,7 @@ class CartController extends Controller {
             if (Session::has('products'))
             {
                 $products = Session::get('products');
-                if(array_key_exists($id, $products))
+                if(array_key_exists($id.$size, $products))
                 {
                     $products[$id.$size] += $quantity;
                 }
@@ -50,7 +58,7 @@ class CartController extends Controller {
 
     public function updateCart(Request $request)
     {
-        $cart_id = $request->get('cart_id');
+        $cart_id = $request->get('basket_id');
         $quantity = $request->get('quantity');
         $idArray = explode('_', $cart_id);
         $id = $idArray[0];
@@ -68,7 +76,7 @@ class CartController extends Controller {
             if (Session::has('products'))
             {
                 $products = Session::get('products');
-                if(array_key_exists($id, $products))
+                if(array_key_exists($id.$size, $products))
                 {
                     $products[$id.$size] = $quantity;
                 }
@@ -85,12 +93,12 @@ class CartController extends Controller {
             Session::put('products', $products);
             Session::save();
         }
-
+        $this->getBigCart();
     }
 
     public function deleteFromCart(Request $request)
     {
-        $id = $request->get('cart_id');
+        $id = $request->get('basket_id');
         $idArray = explode('_', $id);
         $product = Product::find($idArray[0]);
         if ($product) {
@@ -109,7 +117,12 @@ class CartController extends Controller {
                 Session::save();
             }
         }
-
+        if ($request->get('act') == 'main_delete') {
+            $this->getBigCart();
+        }
+        else {
+            $this->getSmallCart();
+        }
     }
 
     private function prepareCartData()
@@ -118,12 +131,20 @@ class CartController extends Controller {
         if (Session::has('products'))
         {
             $products = Session::get('products');
-            $productIds = [];
+            $data['cartItems'] = [];
+            $allSum = 0;
             foreach($products as $key => $value)
             {
                 $idAndSize = explode('_', $key);
-                $productIds[] = $idAndSize[0];
+                $product = Product::find($idAndSize[0]);
+                $product->quantity = $value;
+                $product->sum = $product->price * $product->quantity;
+                $product->cart_id = $key;
+                $product->size = $idAndSize[1];
+                $data['cartItems'][] = $product;
+                $allSum += $product->sum;
             }
+            $data['allSumFormatted'] = $allSum . ' руб.';
         }
         return $data;
     }
@@ -142,9 +163,12 @@ class CartController extends Controller {
         $allSumFormatted = $data['allSumFormatted'];
         $view->with(compact('cartItems', 'allSumFormatted'));
     }
-    public function getBigCart(Request $request)
+    public function getBigCart()
     {
-
+        $data = $this->prepareCartData();
+        $cartItems = $data['cartItems'];
+        $allSumFormatted = $data['allSumFormatted'];
+        echo view('cart/big_cart', compact('cartItems', 'allSumFormatted'));
     }
     public function getOrder(Request $request)
     {

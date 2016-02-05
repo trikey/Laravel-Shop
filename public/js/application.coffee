@@ -8,7 +8,7 @@ $ ->
             url: "/ajax/cart/getsmall"
             data:
                 act: "get_top_cart"
-            type: "POST"
+            type: "GET"
             success: (data) ->
                 $("#top_cart").html data;
                 updateScrollBars()
@@ -50,10 +50,10 @@ $ ->
         product_id = $(this).attr "data-product-id"
         quantity = $("#quantity_#{product_id}").val()
         $this = $(this)
-        size =
-            $("#size_#{product_id}")
-                .find "option:selected"
-                .val();
+        if $("#product-details-modal #size_#{product_id}").length
+            size = $("#product-details-modal #size_#{product_id}").find("option:selected").val()
+        else
+            size = $("#size_#{product_id}").find("option:selected").val()
         max_quantity = $("#size_#{product_id}").find("option:selected").attr('data-max-quantity')
         if(quantity > max_quantity)
             $("#added-to-cart").css('top', $(this).offset().top + 'px')
@@ -62,6 +62,7 @@ $ ->
                 $("#added-to-cart").addClass "hide";
             ), 3000
             return false
+
 
         $.ajax
             url: "/ajax/cart/add"
@@ -76,7 +77,6 @@ $ ->
                 $("#top_cart").html data;
                 updateScrollBars()
                 $this.die("click")
-                $("body").append('<img src="http://mixmarket.biz/uni/tev.php?id=1294938447&r='+escape(document.referrer)+'&t='+(new Date()).getTime()+'" width="1" height="1"/>')
                 $this.text($this.attr("data-in-cart-text")).removeClass('add_to_cart').addClass('in-cart').off().addClass('to_cart')
 #                $("#added-to-cart").removeClass "hide";
 #                setTimeout ( ->
@@ -223,7 +223,7 @@ $ ->
         quantity = $this.val();
         timer = setTimeout ( ->
             $.ajax
-                url: "/ajax/cart/update/"
+                url: "/ajax/cart/update"
                 data:
                     basket_id: basket_id
                     act: "main_update"

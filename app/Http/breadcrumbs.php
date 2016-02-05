@@ -24,6 +24,15 @@ Breadcrumbs::register('', function($breadcrumbs)
 });
 
 /**
+ * 404 Page
+ */
+Breadcrumbs::register('cart', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Корзина', route('cart'));
+});
+
+/**
  * Home > Blog
  */
 Breadcrumbs::register('blog.blog.index', function($breadcrumbs)

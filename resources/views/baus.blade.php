@@ -328,7 +328,7 @@
 <!--<script src="--><?//= SITE_TEMPLATE_PATH; ?><!--/assets/js/script.js?--><?//=time(); ?><!--"></script>-->
 <script src="{{ asset('/assets/js/jquery.validate.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/bootstrap-slider.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/application.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/application.js?345643576') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/catalog_element.js') }}"></script>
 
 
