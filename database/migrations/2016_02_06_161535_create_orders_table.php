@@ -19,9 +19,11 @@ class CreateOrdersTable extends Migration {
 			$table->integer('pay_system_id')->unsigned()->nullable();
 			$table->integer('delivery_id')->unsigned()->nullable();
 			$table->string('xml_id')->nullable();
-			$table->integer('modified_by')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('modified_by')->unsigned();
 			$table->timestamps();
 
+			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('modified_by')->references('id')->on('users');
 			$table->foreign('pay_system_id')->references('id')->on('pay_systems');
 			$table->foreign('delivery_id')->references('id')->on('delivery_systems');
