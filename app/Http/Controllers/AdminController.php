@@ -455,4 +455,95 @@ class AdminController extends Controller {
         return redirect('admin/delivery_systems');
     }
 
+
+    /**
+     * Платежные системы
+     */
+
+    public function indexPaySystems()
+    {
+        $paySystems = PaySystem::paginate(10);
+        return view('admin/payment/index', compact('paySystems'));
+    }
+
+    public function destroyPaySystems($id)
+    {
+        PaySystem::find($id)->delete();
+        return redirect('admin/pay_systems');
+    }
+
+    public function createPaySystems()
+    {
+        return view('admin/payment/create');
+    }
+
+    public function editPaySystems($id)
+    {
+        $paySystem = PaySystem::find($id);
+        return view('admin/payment/edit', compact('paySystem'));
+    }
+
+    public function storePaySystems(PaySystemRequest $request)
+    {
+        $paySystem = new PaySystem($request->all());
+        $paySystem->user()->associate(Auth::user())->save();
+
+        return redirect('admin/pay_systems');
+    }
+
+    public function updatePaySystems($id, PaySystemRequest $request)
+    {
+        $paySystem = PaySystem::findOrFail($id);
+        $paySystem->update($request->all());
+        $paySystem->user()->associate(Auth::user())->update();
+
+        return redirect('admin/pay_systems');
+    }
+
+
+
+    /**
+     * Свойства заказа
+     */
+
+    public function indexOrderProperties()
+    {
+        $orderProperties = OrderProperty::paginate(10);
+        return view('admin/properties/index', compact('orderProperties'));
+    }
+
+    public function destroyOrderProperties($id)
+    {
+        OrderProperty::find($id)->delete();
+        return redirect('admin/order_properties');
+    }
+
+    public function createOrderProperties()
+    {
+        return view('admin/properties/create');
+    }
+
+    public function editOrderProperties($id)
+    {
+        $orderProperty = OrderProperty::find($id);
+        return view('admin/properties/edit', compact('orderProperty'));
+    }
+
+    public function storeOrderProperties(OrderPropertyRequest $request)
+    {
+        $orderProperty = new OrderProperty($request->all());
+        $orderProperty->user()->associate(Auth::user())->save();
+
+        return redirect('admin/order_properties');
+    }
+
+    public function updateOrderProperties($id, OrderPropertyRequest $request)
+    {
+        $orderProperty = OrderProperty::findOrFail($id);
+        $orderProperty->update($request->all());
+        $orderProperty->user()->associate(Auth::user())->update();
+
+        return redirect('admin/order_properties');
+    }
+
 }

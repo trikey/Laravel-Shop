@@ -24,4 +24,10 @@
     <li>
         <a href="{{ url('admin/delivery_systems') }}">Службы доставки</a>
     </li>
+    <li>
+        <a href="{{ url('admin/pay_systems') }}">Платежные системы</a>
+    </li>
+    <li>
+        <a href="{{ url('admin/order_properties') }}">Свойства заказа</a>
+    </li>
 </ul>
