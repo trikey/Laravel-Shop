@@ -87,6 +87,41 @@ Route::get('admin/sizes/{id}/edit', ['as' => 'admin_sizes_edit', 'uses' => 'Admi
 Route::put('admin/sizes/{id}/edit', ['as' => 'admin_sizes_update', 'uses' => 'AdminController@updateSizes']);
 
 
+/** Orders */
+Route::get('admin/orders', ['as' => 'admin_orders', 'uses' => 'AdminController@indexOrders']);
+Route::delete('admin/orders/{id}', 'AdminController@destroyOrders');
+Route::get('admin/orders/create', ['as' => 'admin_orders_create', 'uses' => 'AdminController@createOrders']);
+Route::post('admin/orders/create', ['as' => 'admin_orders_store', 'uses' => 'AdminController@storeOrders']);
+Route::get('admin/orders/{id}/edit', ['as' => 'admin_orders_edit', 'uses' => 'AdminController@editOrders']);
+Route::put('admin/orders/{id}/edit', ['as' => 'admin_orders_update', 'uses' => 'AdminController@updateOrders']);
+
+/** Order properties */
+Route::get('admin/order_properties', ['as' => 'admin_order_properties', 'uses' => 'AdminController@indexOrderProperties']);
+Route::delete('admin/order_properties/{id}', 'AdminController@destroyOrderProperties');
+Route::get('admin/order_properties/create', ['as' => 'admin_order_properties_create', 'uses' => 'AdminController@createOrderProperties']);
+Route::post('admin/order_properties/create', ['as' => 'admin_order_properties_store', 'uses' => 'AdminController@storeOrderProperties']);
+Route::get('admin/order_properties/{id}/edit', ['as' => 'admin_order_properties_edit', 'uses' => 'AdminController@editOrderProperties']);
+Route::put('admin/order_properties/{id}/edit', ['as' => 'admin_order_properties_update', 'uses' => 'AdminController@updateOrderProperties']);
+
+
+/** Payment systems */
+Route::get('admin/pay_systems', ['as' => 'admin_pay_systems', 'uses' => 'AdminController@indexPaySystems']);
+Route::delete('admin/pay_systems/{id}', 'AdminController@destroyPaySystems');
+Route::get('admin/pay_systems/create', ['as' => 'admin_pay_systems_create', 'uses' => 'AdminController@createPaySystems']);
+Route::post('admin/pay_systems/create', ['as' => 'admin_pay_systems_store', 'uses' => 'AdminController@storePaySystems']);
+Route::get('admin/pay_systems/{id}/edit', ['as' => 'admin_pay_systems_edit', 'uses' => 'AdminController@editPaySystems']);
+Route::put('admin/pay_systems/{id}/edit', ['as' => 'admin_pay_systems_update', 'uses' => 'AdminController@updatePaySystems']);
+
+
+/** Delivery systems */
+Route::get('admin/delivery_systems', ['as' => 'admin_delivery_systems', 'uses' => 'AdminController@indexDeliverySystems']);
+Route::delete('admin/delivery_systems/{id}', 'AdminController@destroyDeliverySystems');
+Route::get('admin/delivery_systems/create', ['as' => 'admin_delivery_systems_create', 'uses' => 'AdminController@createDeliverySystems']);
+Route::post('admin/delivery_systems/create', ['as' => 'admin_delivery_systems_store', 'uses' => 'AdminController@storeDeliverySystems']);
+Route::get('admin/delivery_systems/{id}/edit', ['as' => 'admin_delivery_systems_edit', 'uses' => 'AdminController@editDeliverySystems']);
+Route::put('admin/delivery_systems/{id}/edit', ['as' => 'admin_delivery_systems_update', 'uses' => 'AdminController@updateDeliverySystems']);
+
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

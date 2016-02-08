@@ -21,4 +21,7 @@
     <li>
         <a href="{{ url('admin/sizes') }}">Размеры товаров каталога</a>
     </li>
+    <li>
+        <a href="{{ url('admin/delivery_systems') }}">Службы доставки</a>
+    </li>
 </ul>

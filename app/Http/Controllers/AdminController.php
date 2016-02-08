@@ -11,6 +11,12 @@ use App\Brand;
 use App\Section;
 use App\Product;
 use App\Size;
+
+use App\DeliverySystem;
+use App\PaySystem;
+use App\Order;
+use App\OrderProperty;
+
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BlogRequest;
 use App\Http\Requests\OffersRequest;
@@ -18,6 +24,11 @@ use App\Http\Requests\BrandsRequest;
 use App\Http\Requests\SectionsRequest;
 use App\Http\Requests\ProductsRequest;
 use App\Http\Requests\SizesRequest;
+
+use App\Http\Requests\DeliverySystemRequest;
+use App\Http\Requests\PaySystemRequest;
+use App\Http\Requests\OrderRequest;
+use App\Http\Requests\OrderPropertyRequest;
 
 class AdminController extends Controller {
 
@@ -396,6 +407,52 @@ class AdminController extends Controller {
         $this->storeImages($size, $request);
 
         return redirect('admin/sizes');
+    }
+
+
+
+    /**
+     * Службы доставки
+     */
+
+    public function indexDeliverySystems()
+    {
+        $deliverySystems = DeliverySystem::paginate(10);
+        return view('admin/delivery/index', compact('deliverySystems'));
+    }
+
+    public function destroyDeliverySystems($id)
+    {
+        DeliverySystem::find($id)->delete();
+        return redirect('admin/delivery_systems');
+    }
+
+    public function createDeliverySystems()
+    {
+        return view('admin/delivery/create');
+    }
+
+    public function editDeliverySystems($id)
+    {
+        $deliverySystem = DeliverySystem::find($id);
+        return view('admin/delivery/edit', compact('deliverySystem'));
+    }
+
+    public function storeDeliverySystems(DeliverySystemRequest $request)
+    {
+        $deliverySystem = new DeliverySystem($request->all());
+        $deliverySystem->user()->associate(Auth::user())->save();
+
+        return redirect('admin/delivery_systems');
+    }
+
+    public function updateDeliverySystems($id, DeliverySystemRequest $request)
+    {
+        $deliverySystem = DeliverySystem::findOrFail($id);
+        $deliverySystem->update($request->all());
+        $deliverySystem->user()->associate(Auth::user())->update();
+
+        return redirect('admin/delivery_systems');
     }
 
 }
