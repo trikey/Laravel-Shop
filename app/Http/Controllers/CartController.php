@@ -4,8 +4,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Product;
 use Session;
+use App\Product;
+use App\OrderProperty;
+use App\Order;
+use App\User;
+use App\DeliverySystem;
+use App\PaySystem;
 
 class CartController extends Controller {
 
@@ -30,7 +35,18 @@ class CartController extends Controller {
         $data = $this->prepareCartData();
         $cartItems = $data['cartItems'];
         $allSumFormatted = $data['allSumFormatted'];
-        return view('cart/order', compact('cartItems', 'allSumFormatted'));
+        $orderProperties = OrderProperty::active()->orderBy('sort', 'asc')->get();
+        $delivery_systems = DeliverySystem::active()->orderBy('sort', 'asc')->get();
+        $pay_systems = PaySystem::active()->orderBy('sort', 'asc')->get();
+        return view('cart/order', compact('cartItems', 'allSumFormatted', 'orderProperties', 'delivery_systems', 'pay_systems'));
+    }
+
+    /**
+     * Обработка оформления заказа
+     */
+    public function orderSubmit(Request $request)
+    {
+        dd($request->all());
     }
 
     /**

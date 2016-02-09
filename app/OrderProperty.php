@@ -18,4 +18,9 @@ class OrderProperty extends Model {
         return $query->where('code', '=', $code);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('active', '=', 1);
+    }
+
 }
