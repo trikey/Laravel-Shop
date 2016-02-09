@@ -20,11 +20,11 @@ class Order extends Model {
 
     public function delivery_system()
     {
-        return $this->hasOne('App\DeliverySystem', 'delivery_id');
+        return $this->belongsTo('App\DeliverySystem', 'delivery_id');
     }
 
     public function pay_system()
     {
-        return $this->hasOne('App\PaySystem', 'pay_system_id');
+        return $this->belongsTo('App\PaySystem', 'pay_system_id');
     }
 }

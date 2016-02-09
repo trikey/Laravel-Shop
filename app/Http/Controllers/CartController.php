@@ -4,11 +4,16 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Session;
 use App\Product;
 use App\OrderProperty;
 use App\Order;
 use App\User;
+use App\PropertyInOrder;
+use App\OrderCart;
+
 use App\DeliverySystem;
 use App\PaySystem;
 
@@ -42,11 +47,105 @@ class CartController extends Controller {
     }
 
     /**
+     * Детальный просмотр заказа
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function orderDetail($id)
+    {
+        $order = Order::find($id);
+        return view('order/order_detail', compact('order'));
+    }
+
+    /**
      * Обработка оформления заказа
      */
     public function orderSubmit(Request $request)
     {
-        dd($request->all());
+        $data = $request->all();
+        $this->validate($request, [
+            'fio' => 'required|min:3',
+            'email' => 'required|email',
+            'phone' => 'required|min:3',
+            'location' => 'required',
+            'address' => 'required',
+            'delivery_system' => 'required|integer',
+            'pay_system' => 'required|integer'
+        ]);
+        $cartData = $this->prepareCartData();
+        $products = $cartData['cartItems'];
+        $allSum = $cartData['allSum'];
+        $order = new Order([
+            'total_price' => $allSum,
+            'delivery_price' => 0
+        ]);
+
+        $deliverySystem = DeliverySystem::find($data['delivery_system']);
+        $paySystem = PaySystem::find($data['pay_system']);
+        $order->user()->associate(Auth::user());
+        $order->order_user()->associate(Auth::user());
+        $order->delivery_system()->associate($deliverySystem);
+        $order->pay_system()->associate($paySystem);
+        $order->save();
+
+        foreach($products as $product) {
+
+            $orderCart = new OrderCart([
+                'name' => $product->name,
+                'url' => $product->url,
+                'preview_picture' => $product->preview_picture,
+                'price' => $product->price,
+                'quantity' => $product->quantity,
+                'sum' => $product->sum
+            ]);
+            $orderCart->order()->associate($order);
+            $orderCart->save();
+        }
+
+        $propertyInOrder = new PropertyInOrder([
+            'value' => $data['fio']
+        ]);
+        $prop = OrderProperty::FindByCode('fio')->first();
+        $propertyInOrder->property()->associate($prop);
+        $propertyInOrder->order()->associate($order);
+        $propertyInOrder->save();
+
+        $propertyInOrder = new PropertyInOrder([
+            'value' => $data['email']
+        ]);
+        $prop = OrderProperty::FindByCode('email')->first();
+        $propertyInOrder->property()->associate($prop);
+        $propertyInOrder->order()->associate($order);
+        $propertyInOrder->save();
+
+        $propertyInOrder = new PropertyInOrder([
+            'value' => $data['phone']
+        ]);
+        $prop = OrderProperty::FindByCode('phone')->first();
+        $propertyInOrder->property()->associate($prop);
+        $propertyInOrder->order()->associate($order);
+        $propertyInOrder->save();
+
+        $propertyInOrder = new PropertyInOrder([
+            'value' => $data['location']
+        ]);
+        $prop = OrderProperty::FindByCode('location')->first();
+        $propertyInOrder->property()->associate($prop);
+        $propertyInOrder->order()->associate($order);
+        $propertyInOrder->save();
+
+        $propertyInOrder = new PropertyInOrder([
+            'value' => $data['address']
+        ]);
+        $prop = OrderProperty::FindByCode('address')->first();
+        $propertyInOrder->property()->associate($prop);
+        $propertyInOrder->order()->associate($order);
+        $propertyInOrder->save();
+
+        Session::forget('products');
+
+        return redirect('personal/order/'.$order->id);
     }
 
     /**
@@ -205,6 +304,7 @@ class CartController extends Controller {
                 $allSum += $product->sum;
             }
             $data['allSumFormatted'] = $allSum . ' руб.';
+            $data['allSum'] = $allSum;
         }
         return $data;
     }

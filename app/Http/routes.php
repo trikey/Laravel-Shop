@@ -28,6 +28,7 @@ Route::get('ajax/cart/getorder', 'CartController@getOrder');
 Route::get('personal/cart', ['as' => 'cart', 'uses' => 'CartController@index']);
 Route::get('personal/order/make', ['as' => 'order_make','uses' => 'CartController@order']);
 Route::post('personal/order/make', ['as' => 'order_submit','uses' => 'CartController@orderSubmit']);
+Route::get('personal/order/{id}', ['as' => 'order_detail', 'uses' => 'CartController@orderDetail']);
 
 Route::resource('blog', 'BlogController', ['as' => 'blog']);
 Route::resource('aktsii', 'OffersController', ['as' => 'offers']);

@@ -43,6 +43,15 @@ Breadcrumbs::register('order_make', function($breadcrumbs)
 });
 
 /**
+ * Order making page
+ */
+Breadcrumbs::register('order_detail', function($breadcrumbs)
+{
+    $breadcrumbs->parent('cart');
+    $breadcrumbs->push('Просмотр заказа', route('order_detail'));
+});
+
+/**
  * Home > Blog
  */
 Breadcrumbs::register('blog.blog.index', function($breadcrumbs)
