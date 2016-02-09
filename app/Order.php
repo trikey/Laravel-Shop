@@ -27,4 +27,9 @@ class Order extends Model {
     {
         return $this->belongsTo('App\PaySystem', 'pay_system_id');
     }
+
+    public function products()
+    {
+        return $this->hasMany('App\OrderCart');
+    }
 }
