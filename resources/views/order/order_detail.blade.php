@@ -80,26 +80,25 @@
                 <table class="order-details-cart">
                     <tbody>
                     @foreach($order->products as $product)
-                    <tr class="cartProduct">
-                        <td class="cartProductThumb" style="width:20%">
-                            @if(strlen($product->preview_picture) > 0)
-                                <div>
-                                    <a href="{{ $product->url }}">
-                                        <img alt="{{ $product->name }}" src="/uploads/{{ $product->preview_picture }}" />
-                                    </a>
+                        <tr class="cartProduct">
+                            <td class="cartProductThumb" style="width:20%">
+                                @if(strlen($product->preview_picture) > 0)
+                                    <div>
+                                        <a href="{{ $product->url }}">
+                                            <img alt="{{ $product->name }}" src="/uploads/{{ $product->preview_picture }}" />
+                                        </a>
+                                    </div>
+                                @endif
+                            </td>
+                            <td style="width:40%">
+                                <div class="miniCartDescription">
+                                    <h4><a href="{{ $product->url }}"> {{ $product->name }} </a></h4>
+                                    <div class="price"><span> {{ $product->price }} <span class="webdebug-ruble-symbol"> руб.</span> </span></div>
                                 </div>
-                            @endif
-                        </td>
-                        <td style="width:40%">
-                            <div class="miniCartDescription">
-                                <h4><a href="{{ $product->url }}"> {{ $product->name }} </a></h4>
-                                <div class="price"><span> {{ $product->price }} <span class="webdebug-ruble-symbol"> руб.</span> </span></div>
-                            </div>
-                        </td>
-                        <td class="" style="width:10%"><a> X {{ $product->quantity }} </a></td>
-                        <td class="" style="width:15%"><span> {{ $product->sum }} <span class="webdebug-ruble-symbol"> руб.</span> </span></td>
-
-                    </tr>
+                            </td>
+                            <td class="" style="width:10%"><a> X {{ $product->quantity }} </a></td>
+                            <td class="" style="width:15%"><span> {{ $product->sum }} <span class="webdebug-ruble-symbol"> руб.</span> </span></td>
+                        </tr>
                     @endforeach
                     <tr class="cartTotalTr blank">
                         <td class="" style="width:20%">

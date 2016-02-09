@@ -60,8 +60,8 @@
                 <div class="pull-right">
                     <ul class="userMenu">
                         @if (!Auth::guest())
-                            <li><a href="personal/"><span class="hidden-xs">Здравствуйте, {{ Auth::user()->name }}!</span></a></li>
-                            <li><a href="personal/"><span class="hidden-xs"> Мой кабинет</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
+                            <li><a href="/personal"><span class="hidden-xs">Здравствуйте, {{ Auth::user()->name }}!</span></a></li>
+                            <li><a href="/personal"><span class="hidden-xs"> Мой кабинет</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
                             <li><a href="?logout=yes"><span class="hidden-xs"> Выйти </span> <i class="hide visible-xs ">Выйти</i></a></li>
                         @else
                             <li>

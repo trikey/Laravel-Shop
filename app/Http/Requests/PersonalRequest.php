@@ -32,7 +32,7 @@ class PersonalRequest extends Request {
         }
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:user,code'.$id,
+            'email' => 'required|email|unique:users,email'.$id,
             'password' => 'required'
         ];
     }

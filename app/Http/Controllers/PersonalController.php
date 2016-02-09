@@ -6,6 +6,7 @@ use App\User;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\PersonalRequest;
+use Auth;
 
 class PersonalController extends Controller {
 

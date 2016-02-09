@@ -59,6 +59,17 @@ class CartController extends Controller {
     }
 
     /**
+     * Список заказов пользователя
+     *
+     * @return \Illuminate\View\View
+     */
+    public function orderList()
+    {
+        $orders = Order::where('user_id', '=', Auth::user()->id)->paginate(10);
+        return view('order/order_list', compact('orders'));
+    }
+
+    /**
      * Обработка оформления заказа
      */
     public function orderSubmit(Request $request)

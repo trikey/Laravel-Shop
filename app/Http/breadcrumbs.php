@@ -32,6 +32,24 @@ Breadcrumbs::register('cart', function($breadcrumbs)
     $breadcrumbs->push('Корзина', route('cart'));
 });
 
+/**
+ * Personal section page
+ */
+Breadcrumbs::register('personal', function($breadcrumbs) {
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Личный кабинет', route('personal'));
+});
+
+
+/***
+ *
+ * Profile edit page
+ */
+Breadcrumbs::register('personal_edit', function($breadcrumbs) {
+    $breadcrumbs->parent('personal');
+    $breadcrumbs->push('Редактирование личной информации', route('personal_edit'));
+});
+
 
 /**
  * Order making page
@@ -43,11 +61,21 @@ Breadcrumbs::register('order_make', function($breadcrumbs)
 });
 
 /**
- * Order making page
+ * Order list page
+ */
+Breadcrumbs::register('order_list', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Заказы', route('order_list'));
+});
+
+
+/**
+ * Order detail page
  */
 Breadcrumbs::register('order_detail', function($breadcrumbs)
 {
-    $breadcrumbs->parent('cart');
+    $breadcrumbs->parent('order_list');
     $breadcrumbs->push('Просмотр заказа', route('order_detail'));
 });
 
