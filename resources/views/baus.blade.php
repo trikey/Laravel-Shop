@@ -62,7 +62,7 @@
                         @if (!Auth::guest())
                             <li><a href="/personal"><span class="hidden-xs">Здравствуйте, {{ Auth::user()->name }}!</span></a></li>
                             <li><a href="/personal"><span class="hidden-xs"> Мой кабинет</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
-                            <li><a href="?logout=yes"><span class="hidden-xs"> Выйти </span> <i class="hide visible-xs ">Выйти</i></a></li>
+                            <li><a href="/?logout=yes"><span class="hidden-xs"> Выйти </span> <i class="hide visible-xs ">Выйти</i></a></li>
                         @else
                             <li>
                                 <a href="#" data-toggle="modal" data-target="#ModalLogin">
@@ -97,21 +97,21 @@
 
             </div>
         </div>
-        <div class="pull-right hidden-xs" itemscope itemtype="http://schema.org/WebSite">
-            <meta itemprop="url" content="http://thebaus.ru/"/>
-            <form action="{{url('/search')}}" method="get" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
-                <meta itemprop="target" content="http://thebaus.ru/search/?q={q}"/>
-                <input type="text" name="q"  itemprop="query-input" placeholder="Поиск" class="search-input-new" />
-                <div class="search-box2" onclick="$(this).parents('form').submit();">
-                    <div class="input-group">
-                        <button class="btn btn-nobg getFullSearch btn-search-fix" type="button"><i class="fa fa-search"> </i>
-                        </button>
-                    </div>
-                    <input type="submit" style="display: none;"/>
+        {{--<div class="pull-right hidden-xs" itemscope itemtype="http://schema.org/WebSite">--}}
+            {{--<meta itemprop="url" content="http://thebaus.ru/"/>--}}
+            {{--<form action="{{url('/search')}}" method="get" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">--}}
+                {{--<meta itemprop="target" content="http://thebaus.ru/search/?q={q}"/>--}}
+                {{--<input type="text" name="q"  itemprop="query-input" placeholder="Поиск" class="search-input-new" />--}}
+                {{--<div class="search-box2" onclick="$(this).parents('form').submit();">--}}
+                    {{--<div class="input-group">--}}
+                        {{--<button class="btn btn-nobg getFullSearch btn-search-fix" type="button"><i class="fa fa-search"> </i>--}}
+                        {{--</button>--}}
+                    {{--</div>--}}
+                    {{--<input type="submit" style="display: none;"/>--}}
 
-                </div>
-            </form>
-        </div>
+                {{--</div>--}}
+            {{--</form>--}}
+        {{--</div>--}}
         <!--- navbar social icon || this part will be hidden on mobile version -->
 
         <!--/.navbar-right || social icon end-->
@@ -162,12 +162,14 @@
 
 @if(Request::url() != 'http://baus.local')
 <div class="container main-container headerOffset">
+@if(!in_array(Request::url(), ['http://baus.local/auth/login', 'http://baus.local/password/email','http://baus.local/auth/login','http://baus.local/auth/login']))
 {!! Breadcrumbs::render() !!}
+@endif
 @endif
 
 @yield('content')
 
-@if(Request::url() != 'http://baus.local')
+@if(Request::url() != 'http://baus.local' && Request::url() != 'http://baus.local/auth/login')
 </div>
 @endif
 

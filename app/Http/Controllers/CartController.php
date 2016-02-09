@@ -19,6 +19,14 @@ use App\PaySystem;
 
 class CartController extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => [
+            'order',
+            'orderList',
+            'orderDetail'
+        ]]);
+    }
     /**
      * Отображение корзины пользователя
      */

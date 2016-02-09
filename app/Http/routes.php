@@ -14,7 +14,7 @@
 
 //Route::get('/', 'WelcomeController@index');
 //
-//Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
+Route::get('home', ['as' => 'home1', 'uses' => 'IndexController@index']);
 Route::post('ajax/login.php', '\App\Http\Controllers\Auth\AuthController@authenticate');
 Route::post('ajax/register.php', '\App\Http\Controllers\Auth\AuthController@register');
 Route::post('ajax/cart/add', 'CartController@addToCart');
@@ -126,6 +126,9 @@ Route::get('admin/delivery_systems/create', ['as' => 'admin_delivery_systems_cre
 Route::post('admin/delivery_systems/create', ['as' => 'admin_delivery_systems_store', 'uses' => 'AdminController@storeDeliverySystems']);
 Route::get('admin/delivery_systems/{id}/edit', ['as' => 'admin_delivery_systems_edit', 'uses' => 'AdminController@editDeliverySystems']);
 Route::put('admin/delivery_systems/{id}/edit', ['as' => 'admin_delivery_systems_update', 'uses' => 'AdminController@updateDeliverySystems']);
+
+
+
 
 
 Route::controllers([

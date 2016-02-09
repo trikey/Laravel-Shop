@@ -13,6 +13,14 @@ Breadcrumbs::register('home', function($breadcrumbs)
 {
     $breadcrumbs->push('Главная', route('home'));
 });
+/**
+ * Auth
+ */
+Breadcrumbs::register('auth_login', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Авторизация', route('auth_login'));
+});
 
 /**
  * 404 Page

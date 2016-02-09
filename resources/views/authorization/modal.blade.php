@@ -46,7 +46,8 @@
             <div class="modal-footer">
                 <p class="text-center"> Нет учетной записи? <a data-toggle="modal" data-dismiss="modal"
                                                             href="#ModalSignup"> Регистрация </a> <br>
-                    <a href="/auth/?forgot_password=yes"> Забыли пароль? </a></p>
+                                                            {{--<a href="/auth/?forgot_password=yes"> Забыли пароль? </a>--}}
+                    </p>
             </div>
         </div>
 
