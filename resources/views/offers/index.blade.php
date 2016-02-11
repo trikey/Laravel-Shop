@@ -15,14 +15,14 @@
                     <img
                         class="preview_picture img-responsive"
                         border="0"
-                        src="{{$arItem["preview_picture"]}}"
+                        src="/uploads/{{$arItem["preview_picture"]}}"
                         alt="{{$arItem["name"]}}"
                         title="{{$arItem["name"]}}"
                         style="max-width: 500px;"
                         />
                 @endif
                 @if($arItem["preview_text"])
-                    {{$arItem["preview_text"]}}
+                    <?= html_entity_decode($arItem['preview_text']); ?>
                 @endif
                 <div style="clear:both"></div>
             </p>

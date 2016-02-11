@@ -33,12 +33,12 @@
                                 @if ($arItem["preview_picture"])
                                     <div class="post-lead-image  wow fadeInDown  " data-wow-duration="0.2s">
                                         <a href="{{ $arItem["url"] }}">
-                                            <img src="{{ $arItem["preview_picture"] }}" class="img-responsive" alt="{{ $arItem["name"] }}">
+                                            <img src="/uploads/{{ $arItem["preview_picture"] }}" class="img-responsive" alt="{{ $arItem["name"] }}">
                                         </a>
                                     </div>
                                 @endif
                                 <div class="post-description  wow fadeInDown  " data-wow-duration="0.2s">
-                                    <p>{{ $arItem["preview_text"] }}</p>
+                                    <p><?= html_entity_decode($arItem['preview_text']); ?></p>
                                     <a href="{{ $arItem["url"] }}" class="btn btn-more"> Читать далее <i
                                             class="fa fa-long-arrow-right"></i> </a>
                                 </div>

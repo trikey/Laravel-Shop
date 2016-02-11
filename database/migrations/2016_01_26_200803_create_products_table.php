@@ -39,6 +39,10 @@ class CreateProductsTable extends Migration {
 			$table->foreign('modified_by')->references('id')->on('users');
 			$table->foreign('brand_id')->references('id')->on('brands');
         });
+
+        Schema::table('products', function(Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('sections');
+        });
 	}
 
 	/**

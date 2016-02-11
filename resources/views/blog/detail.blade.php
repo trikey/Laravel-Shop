@@ -24,12 +24,12 @@
                         <div class="post-main-view">
                             <div class="post-lead-image wow  fadeIn  " data-wow-duration="0.2s" data-wow-delay=".6s">
                                 @if($article["detail_picture"])
-                                    <img src="{{$article["detail_picture"]}}" class="img-responsive" alt="{{$article["name"]}}">
+                                    <img src="/uploads/{{$article["detail_picture"]}}" class="img-responsive" alt="{{$article["name"]}}">
                                 @endif
                             </div>
 
                             <div class="post-description wow  fadeIn  " data-wow-duration="0.2s" data-wow-delay=".1s">
-                                {{ $article["detail_text"]}}
+                                <?= html_entity_decode($article['detail_text']); ?>
 
                             </div>
                         </div>

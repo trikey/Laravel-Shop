@@ -35,12 +35,9 @@ class CreateSectionsTable extends Migration {
             $table->foreign('modified_by')->references('id')->on('users');
         });
 
-        Schema::table('sections', function(Blueprint $table) {
-            $table->foreign('parent_id')->references('id')->on('sections');
-        });
-        Schema::table('products', function(Blueprint $table) {
-            $table->foreign('parent_id')->references('id')->on('sections');
-        });
+//        Schema::table('sections', function(Blueprint $table) {
+//            $table->foreign('parent_id')->references('id')->on('sections');
+//        });
 	}
 
 	/**

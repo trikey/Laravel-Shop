@@ -36,7 +36,7 @@ class MenuMiddleware {
 			$this->addChildMenuItem($brand, $brands, 'brand');
 
 			// О магазине
-			$menu->add('О магазине', 'about')->active('about/*');
+//			$menu->add('О магазине', 'about')->active('about/*');
 
 			// Блог
 			$menu->add('Блог', 'blog')->active('blog/*');

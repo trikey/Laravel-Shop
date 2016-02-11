@@ -13,11 +13,12 @@
                     <br><br>
                     @if($arItem->preview_picture)
                         <a href="{{ $arItem->url }}">
-                            <img class="preview_picture img-responsive" border="0" src="{{$arItem->preview_picture}}"
+                            <img class="preview_picture img-responsive" border="0" src="/uploads/{{$arItem->preview_picture}}"
                                  alt="{{$arItem->name}}" title="{{$arItem->name}}" style="max-width: 500px;">
                         </a>
                     @endif
-                    {{ $arItem->preview_text }}
+                    <?= html_entity_decode($arItem->preview_text); ?>
+
                 </div>
 
             @endforeach
