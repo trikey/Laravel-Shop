@@ -160,16 +160,16 @@
 
 </div>
 
-@if(Request::url() != 'http://baus.local')
+@if($_SERVER["REQUEST_URI"] !=  '/')
 <div class="container main-container headerOffset">
-@if(!in_array(Request::url(), ['http://baus.local/auth/login', 'http://baus.local/password/email','http://baus.local/auth/login','http://baus.local/auth/login']))
+@if(!in_array($_SERVER["REQUEST_URI"], ['/auth/login', '/password/email','/auth/login','/auth/login']))
 {!! Breadcrumbs::render() !!}
 @endif
 @endif
 
 @yield('content')
 
-@if(Request::url() != 'http://baus.local' && Request::url() != 'http://baus.local/auth/login')
+@if($_SERVER["REQUEST_URI"] != '/' && $_SERVER["REQUEST_URI"] != '/auth/login')
 </div>
 @endif
 
