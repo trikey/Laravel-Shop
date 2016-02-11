@@ -197,21 +197,12 @@
                     <h3> Контакты </h3>
                     <ul>
                         <li class="supportLi">
-                            <p> Возникли вопросы или пожелания? <br/>Звоните нам </p>
-                            <h4><a class="inline" href="callto:+79219007174"> <strong> <i class="fa fa-phone"> </i> +7 921 900 71 74</strong> </a></h4>
+                            {{--<p> Возникли вопросы или пожелания? <br/>Звоните нам </p>--}}
+                            {{--<h4><a class="inline" href="callto:+79219007174"> <strong> <i class="fa fa-phone"> </i> +7 921 900 71 74</strong> </a></h4>--}}
                             <p>Только по рабочим дням с 12 до 20</p>
-<!--                            <p class="text-primary"><b>Заказы по телефону принимаются с 11 января.</b></p>-->
-                            <h4><a class="inline" href="mailto:qa@thebaus.ru"> <i class="fa fa-envelope-o"> </i>
-                                    qa@thebaus.ru </a></h4>
                             <p style="
     font-size: 10px;
-">Название компании: ООО «Компания БАУС»
-                                <br>
-                                ИНН/КПП:	7838044880/783801001
-                                <br>
-                                ОГРН - 1157847371560
-                                <br>
-                                Юридический адрес: 190031, САНКТ-ПЕТЕРБУРГ г, наб. РЕКИ ФОНТАНКИ, дом ДОМ 113, кор. ЛИТЕР А, кв. ПОМЕЩЕНИЕ 18-Н</p>
+"></p>
                         </li>
                     </ul>
                 </div>
@@ -252,11 +243,11 @@
                 <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
                     @include('subscribe/form_footer')
                     <ul class="social">
-                        <li><a href="https://vk.com/thebaus" target="_blank"> <i class="fa fa-vk"> &nbsp; </i> </a></li>
-                        <li><a href="https://www.facebook.com/The-BAUS-1669536626668913/" target="_blank"> <i class=" fa fa-facebook"> &nbsp; </i> </a></li>
+                        {{--<li><a href="https://vk.com/thebaus" target="_blank"> <i class="fa fa-vk"> &nbsp; </i> </a></li>--}}
+                        {{--<li><a href="https://www.facebook.com/The-BAUS-1669536626668913/" target="_blank"> <i class=" fa fa-facebook"> &nbsp; </i> </a></li>--}}
 <!--                        <li><a href="http://twitter.com"> <i class="fa fa-twitter"> &nbsp; </i> </a></li>-->
 <!--                        <li><a href="https://plus.google.com"> <i class="fa fa-google-plus"> &nbsp; </i> </a></li>-->
-                        <li><a target="_blank" href="https://www.instagram.com/thebaus.ru/"> <i class="fa fa-linkedin"> &nbsp; </i> </a></li>
+                        {{--<li><a target="_blank" href="https://www.instagram.com/thebaus.ru/"> <i class="fa fa-linkedin"> &nbsp; </i> </a></li>--}}
                     </ul>
                 </div>
             </div>

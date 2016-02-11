@@ -37,9 +37,9 @@ class DatabaseSeeder extends Seeder {
         DB::table('users')->delete();
 
         $user = new User([
-            'name' => 'Ivan Belitskii',
-            'email' => 'belitskii@gmail.com',
-            'password' => bcrypt('swordfish1992')
+            'name' => 'John Doe',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('admin')
         ]);
         $user->save();
 

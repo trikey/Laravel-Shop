@@ -1,3 +1,11 @@
-## The BAUS
+## Laravel 5.0 Simple Shop Example
 
-Web store thebaus.ru is migrating to laravel...
+<ol>
+<li>Install Laravel 5.0</li>
+<li>Run "php artisan migrate"</li>
+<li>Run "php artisan db:seed"</li>
+</ol>
+
+Admin url /admin
+login: admin@admin.com
+pass: admin
